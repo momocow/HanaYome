@@ -1,8 +1,17 @@
-require("./models/env")
+process.on ('uncaughtException', (e) => {
+  console.error(e.stack)
+  process.exit(1)
+})
+
 const {app, BrowserWindow, ipcMain} = require("electron")
 const path = require("path")
 const log4js = require("log4js")
 
+global.APP = app.getName()
+global.VERSION = app.getVersion()
+global.ASSETS_PATH = path.join(app.getAppPath(), "assets")
+global.APP_PATH = app.getAppPath()
+global.APPDATA_PATH = app.getPath("appData")
 global.config = require("./models/config")
 global.logger = log4js.getLogger(APP)
 global.DEBUG_MODE = config.get("hanayome.debug_mode", false)
@@ -19,10 +28,12 @@ require("./models/flash")
 let mainWindow = null
 
 function createMainWindow(){
+  logger.info("Creating app window")
   mainWindow = new BrowserWindow({
     width: config.get("hanayome.window.width", 980),
     height: config.get("hanayome.window.height", 660),
     useContentSize: true,
+    resizable: false,
     title: "はなよめブラウザ",
     webPreferences: {
       plugins: true

@@ -23,7 +23,6 @@
   },
   "homepage": "https://github.com/momocow/HanaYome#readme",
   "dependencies": {
-    "config": "^1.26.1",
     "cson": "^4.1.0",
     "electron": "^1.6.8",
     "fs-extra": "^3.0.1",

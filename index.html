@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>はなよめブラウザ</title>
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+  <script>
+    require("./views/env")
+  </script>
+
+  <flower-game>
+    <div id="webview-wrapper">
+      <webview src="about:blank" ondrop="event.preventDefault();" plugins disablewebsecurity preload="assets/js/gameview.js"></webview>
+    </div>
+  </flower-game>
+
+  <script>
+    require("./views/service")
+  </script>
+</body>
+</html>

@@ -3,4 +3,4 @@
 > Since it is made by a newbee in NodeJS, any advices via new issues are welcome \_(:з」∠)\_
 
 # Current Progress
-[x] An independent and adaptive browser window
+- [x] An independent and adaptive browser window

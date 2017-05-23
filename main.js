@@ -89,10 +89,15 @@ app.on("activate", ()=>{
   }
 })
 
+//ignore alert from DMM token expiration
+ipcMain.removeAllListeners("ELECTRON_BROWSER_WINDOW_ALERT")
+ipcMain.on("ELECTRON_BROWSER_WINDOW_ALERT", (event, message, title)=>{
+  logger.warn(`[Alert] ** ${title} **\n${message.toString()}`)
+  event.returnValue = 0
+})
+
 ipcMain.on("game-resize", (event, gameSize)=>{
   logger.debug(`Event 'game-resize' received. width=${gameSize.width}, height=${gameSize.height}`)
-  // mainWindow.webContents.executeJavaScript()
-  // mainWindow.webContents.executeJavaScript("window.removeListener('resize', window.resizeWebView)")
   logger.info(mainWindow.resizeWebView)
   mainWindow.webContents.insertCSS(`flower-game webview{width:${gameSize.width}px;height:${gameSize.height}px;}`)
 })

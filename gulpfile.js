@@ -18,27 +18,31 @@ gulp.task('version', ()=>{
   console.log(`*** Start building ${package_name} v${package_version} ***`)
 })
 
-gulp.task('uglify', ['version'], ()=>{
-  gulp.src(js_files, { base: './' })
+gulp.task('uglify-js', ['version'], ()=>{
+  return gulp.src(js_files, { base: './' })
       .pipe(babel({presets: ['es2015']}))
       .pipe(uglify())
       .pipe(gulp.dest('build/uglified'))
+})
 
+gulp.task('minify-html', ['uglify-js'], ()=>{
   return gulp.src('index.html', { base: './' })
       .pipe(htmlmin({collapseWhitespace: true}))
       .pipe(gulp.dest('build/uglified'))
 })
 
-gulp.task('pack', ['uglify'], ()=>{
+gulp.task('pack', ['minify-html'], ()=>{
   console.log("Copying app files")
   for(file in app_files){
     console.log(`** File: ${app_files[file]}`)
     fs.copySync(app_files[file], `build/src/${app_files[file]}`, {overwrite: true})
   }
-  console.log("Copying libraries")
-  fs.copySync("node_modules", "build/src/node_modules", {overwrite: false})
   console.log("Merging with uglified files")
   fs.copySync('build/uglified', 'build/src', {overwrite: true})
+
+  console.log("Building libraries")
+  const execSync = require('child_process').execSync;
+  const child = execSync('npm install --production', {cwd: "build/src"});
 
   ASAR_file = 'build/bin/app.asar'
   asar.createPackage('build/src', ASAR_file, ()=>{

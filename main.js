@@ -55,7 +55,7 @@ function createMainWindow(){
   mainWindow.loadURL(`file://${mainPage}`)
 
   mainWindow.on("close", ()=>{
-    var winSize = mainWindow.getSize()
+    var winSize = mainWindow.getContentSize()
     config.set("hanayome.window.width", winSize[0])
     config.set("hanayome.window.height", winSize[1])
     config.set("hanayome.window.isMaximized", mainWindow.isMaximized())

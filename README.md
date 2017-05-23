@@ -3,4 +3,6 @@
 > Since it is made by a newbee in NodeJS, any advices via new issues are welcome \_(:з」∠)\_
 
 ## Current Progress
-- [x] An independent and adaptive browser window
+- [x] a independent and adaptive browser window using Chromium
+- [x] automatically resizing the game view to fit the window
+- [x] ignoring the alert by DMM token expiration

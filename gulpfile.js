@@ -80,7 +80,7 @@ gulp.task('pack', ['minify-html'], ()=>{
 })
 
 gulp.task('clean', ()=>{
-  return gulp.src(['build/**'], { read: false })
+  return gulp.src(['build/*'], { read: false })
     .pipe(rm())
 })
 

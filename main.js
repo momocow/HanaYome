@@ -17,9 +17,13 @@ global.logger = log4js.getLogger(APP)
 global.DEBUG_MODE = config.get("hanayome.debug_mode", false)
 
 if(DEBUG_MODE){
+  process.env.NODE_ENV="development"
+  logger.info("Running under development mode")
   logger.setLevel("DEBUG")
 }
 else{
+  process.env.NODE_ENV="production"
+  logger.info("Running under production mode")
   logger.setLevel("ERROR")
 }
 
@@ -87,13 +91,6 @@ app.on("activate", ()=>{
   if(mainWindow == null){
     createMainWindow()
   }
-})
-
-//ignore alert from DMM token expiration
-ipcMain.removeAllListeners("ELECTRON_BROWSER_WINDOW_ALERT")
-ipcMain.on("ELECTRON_BROWSER_WINDOW_ALERT", (event, message, title)=>{
-  logger.warn(`[Alert] ** ${title} **\n${message.toString()}`)
-  event.returnValue = 0
 })
 
 ipcMain.on("game-resize", (event, gameSize)=>{

@@ -16,13 +16,16 @@ function extractGameView(){
 
 remote.getCurrentWebContents().on('dom-ready', () => {
   if ($('flower-game').style.display !== 'none')  {
-    webview.style.width = "960px"
-    webview.style.height = "640px"
+    webview.style.width = "980px"
+    webview.style.height = "660px"
     webview.loadURL(GAME_URL)
     webview.addEventListener('dom-ready', ()=>{
       if(DEBUG_MODE){
         webview.openDevTools()
       }
+
+      //ignore alert from DMM token expiration
+      webview.executeJavaScript("DMM.netgame.reloadDialog=()=>{}")
     })
   }
 })

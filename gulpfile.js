@@ -1,12 +1,14 @@
 const gulp = require('gulp')
 const uglify = require('gulp-uglify')
 const babel = require('gulp-babel')
+const zip = require('gulp-zip')
 const fs = require('fs-extra')
 const rm = require('gulp-rimraf')
 const ignore = require('gulp-ignore')
 const pump = require('pump')
 const asar = require('asar')
 const htmlmin = require('gulp-html-minifier')
+const Q = require('q')
 
 const package_json = require('./package.json')
 const package_name = package_json.name
@@ -31,7 +33,7 @@ gulp.task('minify-html', ['uglify-js'], ()=>{
       .pipe(gulp.dest('build/uglified'))
 })
 
-gulp.task('pack', ['minify-html'], ()=>{
+gulp.task('pack', ['minify-html'], async ()=>{
   console.log("Copying app files")
   for(file in app_files){
     console.log(`** File: ${app_files[file]}`)
@@ -44,47 +46,58 @@ gulp.task('pack', ['minify-html'], ()=>{
   const execSync = require('child_process').execSync;
   const child = execSync('npm install --production', {cwd: "build/src"});
 
+  var deferred = Q.defer()
   ASAR_file = 'build/bin/app.asar'
   asar.createPackage('build/src', ASAR_file, ()=>{
     console.log("Package created")
     console.log("Distributing package")
-    fs.copy(ASAR_file, "dist/win32-ia32/resources/app.asar", {overwrite: true}, (err)=>{
-      if(err){
-        console.error(`[Error] ${err}`)
-        return
-      }
-      console.log("win32-ia32: branch built")
-    })
-    fs.copy(ASAR_file, "dist/win32-x64/resources/app.asar", {overwrite: true}, (err)=>{
-      if(err){
-        console.error(`[Error] ${err}`)
-        return
-      }
-      console.log("win32-x64: branch built")
-    })
-    fs.copy(ASAR_file, "dist/linux-x64/resources/app.asar", {overwrite: true}, (err)=>{
-      if(err){
-        console.error(`[Error] ${err}`)
-        return
-      }
-      console.log("linux-x64: branch built")
-    })
-    fs.copy(ASAR_file, "dist/darwin-x64/Electron.app/Contents/Resources/app.asar", {overwrite: true}, (err)=>{
-      if(err){
-        console.error(`[Error] ${err}`)
-        return
-      }
-      console.log("darwin-x64: branch built")
-    })
+    fs.copySync(ASAR_file, "dist/win32-ia32/resources/app.asar", {overwrite: true})
+    console.log("win32-ia32: branch built")
+    fs.copySync(ASAR_file, "dist/win32-x64/resources/app.asar", {overwrite: true})
+    console.log("win32-x64: branch built")
+    fs.copySync(ASAR_file, "dist/linux-x64/resources/app.asar", {overwrite: true})
+    console.log("linux-x64: branch built")
+    fs.copySync(ASAR_file, "dist/darwin-x64/Electron.app/Contents/Resources/app.asar", {overwrite: true})
+    console.log("darwin-x64: branch built")
+
+    deferred.resolve()
   })
+
+  return deferred.promise
 })
 
-gulp.task('clean', ()=>{
+gulp.task('build-clean', ['build'], ()=>{
   return gulp.src(['build/*'], { read: false })
     .pipe(rm())
 })
 
-gulp.task('build', ['pack'])
+gulp.task('build', ['zip'])
+
+gulp.task('zip', ['zip-win-x64', 'zip-win-x86', 'zip-linux-x64', 'zip-mac-x64'])
+
+gulp.task('zip-win-x64', ['pack'], ()=>{
+  return gulp.src("dist/win32-x64/**")
+    .pipe(zip(`${package_name}-v${package_version}-win-x64.zip`))
+    .pipe(gulp.dest("dist/zip"))
+})
+
+gulp.task('zip-win-x86', ['pack'], ()=>{
+  return gulp.src("dist/win32-ia32/**")
+    .pipe(zip(`${package_name}-v${package_version}-win-x32.zip`))
+    .pipe(gulp.dest("dist/zip"))
+})
+
+gulp.task('zip-linux-x64', ['pack'], ()=>{
+  return gulp.src("dist/linux-x64/**")
+    .pipe(zip(`${package_name}-v${package_version}-linux-x64.zip`))
+    .pipe(gulp.dest("dist/zip"))
+})
+
+gulp.task('zip-mac-x64', ['pack'], ()=>{
+  return gulp.src("dist/darwin-x64/**")
+    .pipe(zip(`${package_name}-v${package_version}-mac-x64.zip`))
+    .pipe(gulp.dest("dist/zip"))
+})
 
 gulp.task('default', ()=>{
   console.log('Usage:')

@@ -48,8 +48,5 @@ if(isLocationAt("http://pc-play.games.dmm.co.jp/play/flower-x")){
     document.querySelector('body').appendChild(alignCSS)
     const iframeDoc = document.querySelector('#game_frame').contentWindow.document
     iframeDoc.querySelector('body').appendChild(alignInnerCSS)
-
-    ipcRenderer.send("game-resize", {width: 960, height: 640})
-    // $(iframeDoc).find("#externalContainer").first().css("text-align", 'left')
   }
 }

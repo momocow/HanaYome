@@ -6,13 +6,14 @@ process.on ('uncaughtException', (e) => {
 const {app, BrowserWindow, ipcMain} = require("electron")
 const path = require("path")
 const log4js = require("log4js")
+const url = require("url")
 
 global.APP = app.getName()
 global.VERSION = app.getVersion()
 global.ASSETS_PATH = path.join(app.getAppPath(), "assets")
 global.APP_PATH = app.getAppPath()
 global.APPDATA_PATH = app.getPath("appData")
-global.config = require("./models/config")
+global.config = require("./lib/config")
 global.logger = log4js.getLogger(APP)
 global.DEBUG_MODE = config.get("hanayome.debug_mode", false)
 
@@ -27,7 +28,8 @@ else{
   logger.setLevel("ERROR")
 }
 
-require("./models/flash")
+require("./lib/flash")
+require("./lib/proxy")
 
 let mainWindow = null
 
@@ -55,9 +57,6 @@ function createMainWindow(){
     mainWindow.maximize()
   }
 
-  var mainPage = path.join(APP_PATH, "index.html")
-  mainWindow.loadURL(`file://${mainPage}`)
-
   mainWindow.on("close", ()=>{
     var winSize = mainWindow.getContentSize()
     config.set("hanayome.window.width", winSize[0])
@@ -77,6 +76,19 @@ function createMainWindow(){
   mainWindow.webContents.on('will-navigate', (e) => {
     e.preventDefault()
   })
+
+  // proxy client settings
+  var proxyScheme = config.get("hanayome.proxy.proxyScheme", "http")
+  var proxyPort = config.get("hanayome.proxy.proxyPort", "23777")
+  mainWindow.webContents.session.setProxy(
+    {proxyRules: `file=direct://;${proxyScheme}://127.0.0.1:${proxyPort}`},
+    ()=>{
+      mainWindow.loadURL(url.format({
+        pathname: path.join(APP_PATH, "index.html"),
+        protocol: "file:",
+        slashes: true
+      }))
+  })
 }
 
 app.on("ready", createMainWindow)
@@ -91,10 +103,4 @@ app.on("activate", ()=>{
   if(mainWindow == null){
     createMainWindow()
   }
-})
-
-ipcMain.on("game-resize", (event, gameSize)=>{
-  logger.debug(`Event 'game-resize' received. width=${gameSize.width}, height=${gameSize.height}`)
-  logger.info(mainWindow.resizeWebView)
-  mainWindow.webContents.insertCSS(`flower-game webview{width:${gameSize.width}px;height:${gameSize.height}px;}`)
 })

@@ -1,3 +1,22 @@
 body{
   overflow: hidden;
 }
+
+webview{
+  width: 960px;
+  height: 640px;
+  margin: 8px;
+}
+
+nav{
+  height: 30px;
+}
+
+.icon{
+  width: 24px;
+  height: 24px;
+}
+
+.ui:hover, .ui:active{
+  background-color: #4a4a4a;
+}

@@ -13,8 +13,8 @@ const Q = require('q')
 const package_json = require('./package.json')
 const package_name = package_json.name
 const package_version = package_json.version
-const app_files = ['main.js', 'package.json', 'assets/', 'views/', 'models/']
-const js_files = ['main.js', 'views/**/*.js', 'models/**/*.js', 'assets/js/**/*.js']
+const app_files = ['app.ico', 'main.js', 'package.json', 'assets/', 'views/', 'lib/']
+const js_files = ['main.js', 'views/**/*.js', 'lib/**/*.js', 'assets/js/**/*.js']
 
 gulp.task('version', ()=>{
   console.log(`*** Start building ${package_name} v${package_version} ***`)
@@ -51,13 +51,13 @@ gulp.task('pack', ['minify-html'], async ()=>{
   asar.createPackage('build/src', ASAR_file, ()=>{
     console.log("Package created")
     console.log("Distributing package")
-    fs.copySync(ASAR_file, "dist/win32-ia32/resources/app.asar", {overwrite: true})
+    fs.copySync(ASAR_file, "dist/win-x32/resources/app.asar", {overwrite: true})
     console.log("win32-ia32: branch built")
-    fs.copySync(ASAR_file, "dist/win32-x64/resources/app.asar", {overwrite: true})
+    fs.copySync(ASAR_file, "dist/win-x64/resources/app.asar", {overwrite: true})
     console.log("win32-x64: branch built")
     fs.copySync(ASAR_file, "dist/linux-x64/resources/app.asar", {overwrite: true})
     console.log("linux-x64: branch built")
-    fs.copySync(ASAR_file, "dist/darwin-x64/Electron.app/Contents/Resources/app.asar", {overwrite: true})
+    fs.copySync(ASAR_file, "dist/mac-x64/Electron.app/Contents/Resources/app.asar", {overwrite: true})
     console.log("darwin-x64: branch built")
 
     deferred.resolve()

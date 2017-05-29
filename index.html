@@ -4,9 +4,20 @@
   <meta charset="utf-8">
   <title>はなよめブラウザ</title>
   <link rel="stylesheet" href="assets/css/app.css">
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <script>
+    require("./views/env")
+    require("./views/notify")("document", $$)
+    require("bootstrap")
+  </script>
 </head>
 <body>
-
+  <nav class="navbar navbar-static-top navbar-inverse navbar-btn">
+    <div class="btn-toolbar" role="toolbar">
+      <a class="ui ui-volume btn navbar-btn toggleable"></a>
+      <a class="ui ui-screenshot btn navbar-btn"></a>
+    </div>
+  </nav>
   <flower-game>
     <div id="webview-wrapper">
       <webview src="about:blank" ondrop="event.preventDefault();" plugins disablewebsecurity preload="assets/js/gameview.js"></webview>
@@ -14,8 +25,9 @@
   </flower-game>
 
   <script>
-    require("./views/env")
-    require("./views/service")
+    require("./views/ui")
+    require("./views/services")
+    require("./views/webview")
   </script>
 </body>
 </html>

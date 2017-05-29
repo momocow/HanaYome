@@ -76,13 +76,13 @@ gulp.task('build', ['zip'])
 gulp.task('zip', ['zip-win-x64', 'zip-win-x86', 'zip-linux-x64', 'zip-mac-x64'])
 
 gulp.task('zip-win-x64', ['pack'], ()=>{
-  return gulp.src("dist/win32-x64/**")
+  return gulp.src("dist/win-x64/**")
     .pipe(zip(`${package_name}-v${package_version}-win-x64.zip`))
     .pipe(gulp.dest("dist/zip"))
 })
 
 gulp.task('zip-win-x86', ['pack'], ()=>{
-  return gulp.src("dist/win32-ia32/**")
+  return gulp.src("dist/win-x32/**")
     .pipe(zip(`${package_name}-v${package_version}-win-x32.zip`))
     .pipe(gulp.dest("dist/zip"))
 })
@@ -94,7 +94,7 @@ gulp.task('zip-linux-x64', ['pack'], ()=>{
 })
 
 gulp.task('zip-mac-x64', ['pack'], ()=>{
-  return gulp.src("dist/darwin-x64/**")
+  return gulp.src("dist/mac-x64/**")
     .pipe(zip(`${package_name}-v${package_version}-mac-x64.zip`))
     .pipe(gulp.dest("dist/zip"))
 })

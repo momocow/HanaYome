@@ -6,3 +6,6 @@
 - [x] a independent and adaptive browser window using Chromium
 - [x] automatically resizing the game view to fit the window
 - [x] ignoring the alert by DMM token expiration
+- [x] mutable audio
+- [x] able to capture a screenshot into the clipboard
+- [x] app icon

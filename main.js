@@ -12,6 +12,7 @@ global.APP = app.getName()
 global.VERSION = app.getVersion()
 global.ROOT = __dirname
 global.APP_PATH = app.getAppPath()
+global.EXE_PATH = app.getPath("exe")
 global.ASSETS_PATH = path.join(APP_PATH, "assets")
 global.APPDATA_PATH = app.getPath("appData")
 global.config = require("./lib/config")
@@ -34,12 +35,19 @@ if (process.platform === 'win32' && config.get('hanayome.createShortcut', true))
   const shortcutPath = APPDATA_PATH + "\\Microsoft\\Windows\\Start Menu\\Programs\\hanayome.lnk"
   const targetPath = app.getPath('exe')
   const argPath = APP_PATH
+  var iconPath
+  if(path.basename(EXE_PATH, ".exe").toLowerCase() == "hanayome"){
+    iconPath = path.join(path.dirname(EXE_PATH), 'app.ico')
+  }
+  else{
+	iconPath = path.join(APP_PATH, "app.ico")
+  }
   const option = {
     target: targetPath,
     args: argPath,
     appUserModelId: 'me.momocow.hanayome',
     description: 'A dedicated browser for the web game, Flower Knight Girls.',
-    icon: path.join(APP_PATH, 'app.ico'),
+    icon: iconPath,
     iconIndex: 0
   }
   shell.writeShortcutLink(shortcutPath, option)

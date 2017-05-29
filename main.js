@@ -39,7 +39,7 @@ if (process.platform === 'win32' && config.get('hanayome.createShortcut', true))
     args: argPath,
     appUserModelId: 'me.momocow.hanayome',
     description: 'A dedicated browser for the web game, Flower Knight Girls.',
-    icon: path.join(ROOT, 'app.ico'),
+    icon: path.join(APP_PATH, 'app.ico'),
     iconIndex: 0
   }
   shell.writeShortcutLink(shortcutPath, option)

@@ -1,5 +1,6 @@
 body{
   overflow: hidden;
+  background-color: #444444;
 }
 
 webview{
@@ -8,15 +9,15 @@ webview{
   margin: 8px;
 }
 
-nav{
-  height: 30px;
-}
-
 .icon{
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
 }
 
 .ui:hover, .ui:active{
   background-color: #4a4a4a;
+}
+
+.btn:active{
+    box-shadow:none;
 }

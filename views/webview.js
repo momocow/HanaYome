@@ -1,6 +1,10 @@
+const {ipcRenderer} = require("electron")
 const webview = $('flower-game webview')
+const $webview = $$('flower-game webview')
 
 remote.getCurrentWebContents().on('dom-ready', () => {
+  ipcRenderer.sendSync("hanayome.main.dom-ready", webview.getWebContents().id)
+
   webview.getWebContents().on('dom-ready', ()=>{
     if(DEBUG_MODE && !webview.isDevToolsOpened()){
       webview.openDevTools({detach: true})
@@ -11,6 +15,5 @@ remote.getCurrentWebContents().on('dom-ready', () => {
       webview.setZoomFactor(1.0)
     }
   })
-
   webview.loadURL(GAME_URL)
 })

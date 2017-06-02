@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <title>はなよめブラウザ</title>
-  <link rel="stylesheet" href="assets/css/app.css">
   <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/app.css">
   <script>
     require("./views/env")
     require("./views/notify")("document", $$)
@@ -12,10 +12,18 @@
   </script>
 </head>
 <body>
-  <nav class="navbar navbar-static-top navbar-inverse navbar-btn">
-    <div class="btn-toolbar" role="toolbar">
-      <a class="ui ui-volume btn navbar-btn toggleable"></a>
-      <a class="ui ui-screenshot btn navbar-btn"></a>
+  <nav class="navbar navbar-static-top navbar-inverse">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav navbar-left">
+          <li class="ui"><a class="ui ui-refresh btn navbar-btn"></a></li>
+          <li class="ui"><a class="ui ui-volume btn navbar-btn toggleable"></a></li>
+          <li class="ui"><a class="ui ui-screenshot btn navbar-btn"></a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="ui"><a class="ui ui-info btn navbar-btn"></a></li>
+        </ul>
+      </div>
     </div>
   </nav>
   <flower-game>

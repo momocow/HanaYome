@@ -6,6 +6,14 @@ window.loadUIIcons()
 window.initCtrlTools()
 
 //event listeners
+$$(".ui.ui-refresh").on("click", (e)=>{
+  webview.reload()
+})
+
+$$(".ui.ui-info").on("click", (e)=>{
+  window.ipcRenderer.send("hanayome.info.open")
+})
+
 $$(".ui.ui-volume.toggleable").on("click", (e)=>{
     window.toggleUI("volume", ()=>{
       if($(`.ui.ui-volume.toggleable`).childNodes[0] == window.images.mute){

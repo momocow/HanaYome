@@ -18,6 +18,8 @@ global.APPDATA_PATH = app.getPath("appData")
 global.config = require("./lib/config")
 global.logger = log4js.getLogger(APP)
 global.DEBUG_MODE = config.get("hanayome.debug_mode", false)
+global.whitelist = require("./lib/whiltelist")
+
 
 if(DEBUG_MODE){
   process.env.NODE_ENV="development"
@@ -66,17 +68,18 @@ require("./lib/flash")
 // require("./lib/proxy")
 
 let mainWindow = null
+let infoWindow = null
 
 function createMainWindow(){
   logger.info("Creating app window")
 
   var winWidth = config.get("hanayome.window.width", 992)
-  var winHeight = config.get("hanayome.window.height", 768)
+  var winHeight = config.get("hanayome.window.height", 806)
   mainWindow = new BrowserWindow({
     width: winWidth,
     height: winHeight,
     minWidth: 992,
-    minHeight: 768,
+    minHeight: 806,
     resizable: true,
     icon: path.join(ROOT, 'app.ico'),
     title: "はなよめブラウザ",
@@ -90,7 +93,7 @@ function createMainWindow(){
   })
 
   // remove the default menu
-  mainWindow.setMenu(null);
+  mainWindow.setMenu(null)
 
   if(config.get("hanayome.window.isMaximized", false)){
     mainWindow.maximize()
@@ -104,7 +107,7 @@ function createMainWindow(){
     config.set("hanayome.window.alwaysOnTop", mainWindow.isAlwaysOnTop())
   })
 
-  mainWindow.on("closed", ()=>{
+  mainWindow.on('closed', () => {
     mainWindow = null
   })
 
@@ -144,6 +147,44 @@ app.on("activate", ()=>{
   if(mainWindow == null){
     createMainWindow()
   }
+})
+
+ipcMain.on("hanayome.info.open", (e)=>{
+  if(!infoWindow){
+    infoWindow = new BrowserWindow({
+      width: 100,
+      height: 100,
+      resizable: true,
+      icon: path.join(ROOT, 'app.ico'),
+      title: "はなよめブラウザ- info",
+    })
+
+    infoWindow.once("ready-to-show", ()=>{
+      infoWindow.show()
+    })
+
+    infoWindow.on('closed', () => {
+      infoWindow = null
+    })
+
+    // remove the default menu
+    infoWindow.setMenu(null)
+
+    if(DEBUG_MODE){
+      infoWindow.webContents.openDevTools({detach: true})
+    }
+  }
+})
+
+ipcMain.on("hanayome.main.dom-ready", (e, id)=>{
+  var webviewContent = webContents.fromId(id)
+  webviewContent.on("will-navigate", (e, url)=>{
+    if(!whitelist.hasURL(url)){
+      e.preventDefault()
+    }
+  })
+
+  e.returnValue=null
 })
 
 ipcMain.on("hanayome.webview.screenshot.pre", (e, id)=>{

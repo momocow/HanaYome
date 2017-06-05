@@ -86,6 +86,7 @@ window.initUIs = ()=>{
       var uiid = window.getUIID(UI)
       var defaultSpan = document.createElement("SPAN")
       defaultSpan.innerHTML = uiid
+      defaultSpan.classList.add("icon")
       var image = _.get(window.images, uiid, defaultSpan)
       UI.appendChild(image)
     }
@@ -97,7 +98,7 @@ window.initToggleableUIs = ()=>{
   window.initToggleableUI(
     "volume",
     ()=>{
-      return window.config.get("hanayome.audio.isMuted", false)
+      return window.configs.audio.isMuted
     },
     (chosen)=>{
       $$(webview).on("dom-ready", (e)=>{
@@ -115,14 +116,19 @@ window.loadUIIcons = ()=>{
   for(var imageFile of imageFiles){
     const name = path.basename(imageFile, ".png")
     window.images[name] = document.createElement("IMG")
-    window.images[name].classList.add("icon")
+    window.images[name].classList.add("icon", "img-" + name)
     window.images[name].src = imageFile
   }
 
   return window
 }
 
+window.initInfoModal = ()=>{
+  $$("#current_ver").html(VERSION)
+}
+
 window.initCtrlTools = ()=>{
   window.initUIs()
   window.initToggleableUIs()
+  window.initInfoModal()
 }

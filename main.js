@@ -3,11 +3,10 @@ process.on ('uncaughtException', (e) => {
   process.exit(1)
 })
 
-const {app, shell,  BrowserWindow, ipcMain, webContents, clipboard} = require("electron")
+const {app, shell,  BrowserWindow, ipcMain, webContents, clipboard, dialog} = require("electron")
 const path = require("path")
-const log4js = require("log4js")
-const url = require("url")
 
+//set up global variables
 global.APP = app.getName()
 global.VERSION = app.getVersion()
 global.ROOT = __dirname
@@ -15,11 +14,16 @@ global.APP_PATH = app.getAppPath()
 global.EXE_PATH = app.getPath("exe")
 global.ASSETS_PATH = path.join(APP_PATH, "assets")
 global.APPDATA_PATH = app.getPath("appData")
-global.config = require("./lib/config")
-global.logger = log4js.getLogger(APP)
-global.DEBUG_MODE = config.get("hanayome.debug_mode", false)
-global.whitelist = require("./lib/whiltelist")
 
+
+const log4js = require("log4js")
+const url = require("url")
+const config = require("./lib/config")
+
+global.logger = log4js.getLogger(APP)
+global.configs = require("./init")
+global.whitelist = require("./lib/whiltelist")
+global.DEBUG_MODE = configs.debug_mode
 
 if(DEBUG_MODE){
   process.env.NODE_ENV="development"
@@ -32,8 +36,9 @@ else{
   logger.setLevel("ERROR")
 }
 
+//create shortcut
 app.setAppUserModelId('me.momocow.hanayome')
-if (process.platform === 'win32' && config.get('hanayome.createShortcut', true)) {
+if (process.platform === 'win32' && configs.createShortcut) {
   const shortcutPath = APPDATA_PATH + "\\Microsoft\\Windows\\Start Menu\\Programs\\hanayome.lnk"
   const targetPath = app.getPath('exe')
   const argPath = APP_PATH
@@ -73,16 +78,17 @@ let infoWindow = null
 function createMainWindow(){
   logger.info("Creating app window")
 
-  var winWidth = config.get("hanayome.window.width", 992)
-  var winHeight = config.get("hanayome.window.height", 806)
+  var winWidth = configs.window.width
+  var winHeight = configs.window.height
   mainWindow = new BrowserWindow({
     width: winWidth,
     height: winHeight,
-    minWidth: 992,
+    minWidth: 1016,
     minHeight: 806,
     resizable: true,
     icon: path.join(ROOT, 'app.ico'),
     title: "はなよめブラウザ",
+    show: false,
     webPreferences: {
       plugins: true
     }
@@ -95,16 +101,16 @@ function createMainWindow(){
   // remove the default menu
   mainWindow.setMenu(null)
 
-  if(config.get("hanayome.window.isMaximized", false)){
+  if(configs.window.isMaximized){
     mainWindow.maximize()
   }
 
   mainWindow.on("close", ()=>{
     var winSize = mainWindow.getSize()
-    config.set("hanayome.window.width", Math.max(992, winSize[0]  - 1))
-    config.set("hanayome.window.height", Math.max(768, winSize[1] - 1))
+    config.set("hanayome.window.width", Math.max(1016, winSize[0]  - 1))
+    config.set("hanayome.window.height", Math.max(806, winSize[1] - 1))
     config.set("hanayome.window.isMaximized", mainWindow.isMaximized())
-    config.set("hanayome.window.alwaysOnTop", mainWindow.isAlwaysOnTop())
+    config.set("hanayome.window.isAlwaysOnTop", mainWindow.isAlwaysOnTop())
   })
 
   mainWindow.on('closed', () => {
@@ -122,11 +128,12 @@ function createMainWindow(){
   })
 
   // proxy client settings
-  var proxyScheme = config.get("hanayome.proxy.proxyScheme", "http")
-  var proxyPort = config.get("hanayome.proxy.proxyPort", "23777")
+  var proxyScheme = configs.proxy.proxyScheme
+  var proxyPort = configs.proxy.proxyPort
   mainWindow.webContents.session.setProxy(
     {proxyRules: `file=direct://;${proxyScheme}://127.0.0.1:${proxyPort}`},
     ()=>{
+      logger.info("App window loading")
       mainWindow.loadURL(url.format({
         pathname: path.join(APP_PATH, "index.html"),
         protocol: "file:",
@@ -146,33 +153,6 @@ app.on("window-all-closed", ()=>{
 app.on("activate", ()=>{
   if(mainWindow == null){
     createMainWindow()
-  }
-})
-
-ipcMain.on("hanayome.info.open", (e)=>{
-  if(!infoWindow){
-    infoWindow = new BrowserWindow({
-      width: 100,
-      height: 100,
-      resizable: true,
-      icon: path.join(ROOT, 'app.ico'),
-      title: "はなよめブラウザ- info",
-    })
-
-    infoWindow.once("ready-to-show", ()=>{
-      infoWindow.show()
-    })
-
-    infoWindow.on('closed', () => {
-      infoWindow = null
-    })
-
-    // remove the default menu
-    infoWindow.setMenu(null)
-
-    if(DEBUG_MODE){
-      infoWindow.webContents.openDevTools({detach: true})
-    }
   }
 })
 
@@ -203,4 +183,8 @@ ipcMain.on("hanayome.webview.screenshot.pre", (e, id)=>{
   catch(err){
     e.sender.send("hanayome.webview.screenshot.post", false, err.message)
   }
+})
+
+ipcMain.on("hanayome.version_check", async(e)=>{
+  e.returnValue = await require("./lib/version_check")
 })

@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <title>はなよめブラウザ</title>
   <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/bootstrap.vertical-tabs.min.css">
   <link rel="stylesheet" href="assets/css/app.css">
   <script>
     require("./views/env")
@@ -21,16 +22,64 @@
           <li class="ui"><a class="ui ui-screenshot btn navbar-btn"></a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li class="ui"><a class="ui ui-info btn navbar-btn"></a></li>
+          <li class="ui"><a class="ui ui-settings btn navbar-btn"></a></li>
+          <li class="ui"><a class="ui ui-info btn navbar-btn" data-toggle="modal" data-target="#modal-info"></a></li>
         </ul>
       </div>
     </div>
   </nav>
-  <flower-game>
-    <div id="webview-wrapper">
-      <webview src="about:blank" ondrop="event.preventDefault();" plugins disablewebsecurity preload="assets/js/gameview.js"></webview>
+
+  <div class="container-fluid">
+    <flower-game>
+      <div id="webview-wrapper">
+        <webview src="about:blank" ondrop="event.preventDefault();" plugins disablewebsecurity preload="assets/js/gameview.js"></webview>
+      </div>
+    </flower-game>
+  </div>
+
+  <info>
+    <div class="modal fade" id="modal-info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="modal-info-title">About</h4>
+          </div>
+          <div class="modal-body">
+            <div class="container-fluid">
+              <div class="col-xs-3"> <!-- required for floating -->
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs tabs-left">
+                  <li class="active"><a href="#info" data-toggle="tab">Info</a></li>
+                  <li><a id="tab-vers" href="#versions" data-toggle="tab">Versions</a></li>
+                  <li><a href="#credit" data-toggle="tab">Credit</a></li>
+                </ul>
+              </div>
+              <div class="col-xs-9">
+                <!-- Tab panes -->
+                <div class="tab-content">
+                  <div class="tab-pane active" id="info"><h2><img height="32" src="./app.ico">はなよめブラウザ</h2></div>
+                  <div class="tab-pane" id="versions">
+                    <h2>Current Version</h2>
+                    <div class="info-box">
+                      <div id="current_ver"></div>
+                    </div>
+                    <h2>New Versions<a class="ui ui-version-check btn"></a></h2>
+                    <div id="new-versions" class="info-box">
+                    </div>
+                  </div>
+                  <div class="tab-pane" id="credit">credit Tab.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
     </div>
-  </flower-game>
+  </info>
 
   <script>
     require("./views/ui")

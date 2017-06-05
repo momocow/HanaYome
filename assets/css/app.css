@@ -1,4 +1,5 @@
 body{
+  font-size: 18px;
   overflow: hidden;
   background-color: #444444;
 }
@@ -7,6 +8,59 @@ webview{
   width: 960px;
   height: 640px;
   margin: 8px;
+}
+
+.modal-content{
+  color: white;
+  background-color: #6b4c3d;
+  border-radius: 2px;
+}
+
+.modal-body{
+  background-color: #354843;
+}
+
+.nav-tabs a{
+  color: #d0d0d0;
+}
+.modal-content>.modal-header{
+  border-bottom: 1px solid #a9a9a9;
+}
+
+.modal-content>.modal-footer{
+  border-top: 1px solid #a9a9a9;
+}
+
+.tabs-left {
+  height: 540px;
+  border-right: 1px solid #a9a9a9;
+}
+
+.modal-body a:hover{
+  background-color: #808080;
+}
+
+.nav-tabs>li>a:hover{
+  color: #d0d0d0;
+  background-color: #808080;
+  border-top: 1px solid transparent;
+  border-left: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+  margin-right: 0;
+}
+
+.nav-tabs>li>a:focus{
+  color: #d0d0d0;
+  background-color: #808080;
+  border-top: 1px solid transparent;
+  border-left: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+  margin-right: 0;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+  border: 1px solid #a9a9a9;
+  background-color: #c8d3e0;
 }
 
 .icon{
@@ -19,5 +73,36 @@ webview{
 }
 
 .btn:active{
-    box-shadow:none;
+  box-shadow:none;
+}
+
+.img-attention{
+  display: inline;
+  width: 20px;
+  height: 20px;
+  position: relative;
+  right: 8px;
+  top: 16px;
+}
+
+.tab-attention{
+  right: 0;
+  top: 0;
+  left: 8px;
+}
+
+.close{
+  background-color: #c8d3e0;
+}
+
+.badge{
+  margin: 0 10px;
+  background-color: #e24d4d;
+}
+
+.info-box{
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 32px;
 }

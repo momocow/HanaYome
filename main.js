@@ -15,13 +15,14 @@ global.EXE_PATH = app.getPath("exe")
 global.ASSETS_PATH = path.join(APP_PATH, "assets")
 global.APPDATA_PATH = app.getPath("appData")
 
-
+const fs = require("fs-extra")
 const log4js = require("log4js")
 const url = require("url")
 const config = require("./lib/config")
+const utils = require("./lib/utils")
 
 global.logger = log4js.getLogger(APP)
-global.configs = require("./init")
+global.configs = require("./lib/init")
 global.whitelist = require("./lib/whiltelist")
 global.DEBUG_MODE = configs.debug_mode
 
@@ -38,42 +39,50 @@ else{
 
 //create shortcut
 app.setAppUserModelId('me.momocow.hanayome')
-if (process.platform === 'win32' && configs.createShortcut) {
-  const shortcutPath = APPDATA_PATH + "\\Microsoft\\Windows\\Start Menu\\Programs\\hanayome.lnk"
-  const targetPath = app.getPath('exe')
-  const argPath = APP_PATH
-  var iconPath
-  if(path.basename(EXE_PATH, ".exe").toLowerCase() == "hanayome"){
-    iconPath = path.join(path.dirname(EXE_PATH), 'app.ico')
+const shortcutPath = path.join(APPDATA_PATH, "Microsoft", "Windows", "Start Menu", "Programs", "hanayome.lnk")
+try{
+  const shortcut = shell.readShortcutLink(shortcutPath)
+  if(shortcut.appUserModelId != "me.momocow.hanayome"){
+    fs.removeSync(shortcutPath)
+    throw "Error shortcut link"
   }
-  else{
-	iconPath = path.join(APP_PATH, "app.ico")
-  }
-  const option = {
-    target: targetPath,
-    args: argPath,
-    appUserModelId: 'me.momocow.hanayome',
-    description: 'A dedicated browser for the web game, Flower Knight Girls.',
-    icon: iconPath,
-    iconIndex: 0
-  }
-  shell.writeShortcutLink(shortcutPath, option)
+}
+catch(err){
+  if (process.platform === 'win32' && configs.createShortcut){
+    const targetPath = app.getPath('exe')
+    const argPath = APP_PATH
+    var iconPath
+    if(path.basename(EXE_PATH, ".exe").toLowerCase() == "hanayome"){
+      iconPath = path.join(path.dirname(EXE_PATH), 'app.ico')
+    }
+    else{
+  	   iconPath = path.join(APP_PATH, "app.ico")
+    }
+    const option = {
+      target: targetPath,
+      args: argPath,
+      appUserModelId: 'me.momocow.hanayome',
+      description: 'A dedicated browser for the web game, Flower Knight Girls.',
+      icon: iconPath,
+      iconIndex: 0
+    }
+    shell.writeShortcutLink(shortcutPath, option)
 
-  const safeModeShortcutPath = APPDATA_PATH + "\\Microsoft\\Windows\\Start Menu\\Programs\\hanayome (safe mode).lnk"
-  const safeModeOption = Object.assign({}, option)
-  Object.assign(safeModeOption, {
-    description: 'A dedicated browser for the web game, Flower Knight Girls (safe mode)',
-    args: `${argPath} --safe`,
-    appUserModelId: 'me.momocow.hanayome',
-  })
-  shell.writeShortcutLink(safeModeShortcutPath, safeModeOption)
+    const safeModeShortcutPath = APPDATA_PATH + "\\Microsoft\\Windows\\Start Menu\\Programs\\hanayome (safe mode).lnk"
+    const safeModeOption = Object.assign({}, option)
+    Object.assign(safeModeOption, {
+      description: 'A dedicated browser for the web game, Flower Knight Girls (safe mode)',
+      args: `${argPath} --safe`,
+      appUserModelId: 'me.momocow.hanayome',
+    })
+    shell.writeShortcutLink(safeModeShortcutPath, safeModeOption)
+  }
 }
 
 require("./lib/flash")
 // require("./lib/proxy")
 
 let mainWindow = null
-let infoWindow = null
 
 function createMainWindow(){
   logger.info("Creating app window")
@@ -185,6 +194,8 @@ ipcMain.on("hanayome.webview.screenshot.pre", (e, id)=>{
   }
 })
 
-ipcMain.on("hanayome.version_check", async(e)=>{
-  e.returnValue = await require("./lib/version_check")
+ipcMain.on("hanayome.version_check", (e)=>{
+  require("./lib/version_check").then((new_ver)=>{
+    e.returnValue = new_ver
+  })
 })

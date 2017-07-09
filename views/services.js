@@ -36,7 +36,7 @@ ipcRenderer.on("hanayome.webview.screenshot.post", (e, result, err)=>{
 
 
 //new_vers = [{type: string, version: string}, ...]
-new_vers = ipcRenderer.sendSync("hanayome.version_check")
+var new_vers = ipcRenderer.sendSync("hanayome.version_check")
 if(new_vers.length > 0){
   //current version is not the latest
   $(".ui.ui-info").appendChild(window.images.attention)

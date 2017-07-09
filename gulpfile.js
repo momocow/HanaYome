@@ -14,7 +14,7 @@ const package_json = require('./package.json')
 const package_name = package_json.name
 const package_version = package_json.version
 const app_files = ['app.ico', 'main.js', 'package.json', 'assets/', 'views/', 'lib/']
-const js_files = ['main.js', 'views/**/*.js', 'lib/**/*.js', 'assets/js/**/*.js']
+const js_files = ['main.js', 'init.js', 'views/**/*.js', 'lib/**/*.js', 'assets/js/**/*.js']
 
 gulp.task('version', ()=>{
   console.log(`*** Start building ${package_name} v${package_version} ***`)
@@ -23,7 +23,7 @@ gulp.task('version', ()=>{
 gulp.task('uglify-js', ['version'], ()=>{
   return gulp.src(js_files, { base: './' })
       .pipe(babel({presets: ['es2015']}))
-      .pipe(uglify())
+      .pipe(uglify().on("error", console.log))
       .pipe(gulp.dest('build/uglified'))
 })
 

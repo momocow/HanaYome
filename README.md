@@ -5,7 +5,7 @@
 ## TODO
 - [ ] rewriting scripts following the NodeJS-supported ES6 standard  
 > Except `import`/`export` since the concern about ES6 vs CommonJS
-> is the compatability for browsers; however, the Hanayome is an desktop application and does not depend on browsers. It uses Electron to build the app and already has a Chromium inside.
+> is the compatibility for browsers; however, the Hanayome is an desktop application and does not depend on browsers. It uses Electron to build the app and already has a Chromium inside.
 
 - [ ] reconstructing the project using AngularJS
 - [ ] a version control system including auto-update

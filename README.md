@@ -3,7 +3,8 @@
 > Since it is made by a newbee in NodeJS, any advices via new issues are welcome \_(:з」∠)\_
 
 ## TODO
-- [ ] re-construct the project using AngularJS
+- [ ] rewriting all scripts following the ES6 standard
+- [ ] reconstructing the project using AngularJS
 - [ ] a version control system including auto-update
 - [ ] a proxy server to listen for the game packets
 

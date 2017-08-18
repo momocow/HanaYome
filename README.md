@@ -2,6 +2,11 @@
 ### _A WIP browser for DMM webgame, Flower Knight_
 > Since it is made by a newbee in NodeJS, any advices via new issues are welcome \_(:з」∠)\_
 
+## TODO
+- [ ] re-construct the project using AngularJS
+- [ ] a version control system including auto-update
+- [ ] a proxy server to listen for the game packets
+
 ## Current Progress
 - [x] a independent and adaptive browser window using Chromium
 - [x] automatically resizing the game view to fit the window

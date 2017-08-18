@@ -3,7 +3,10 @@
 > Since it is made by a newbee in NodeJS, any advices via new issues are welcome \_(:з」∠)\_
 
 ## TODO
-- [ ] rewriting all scripts following the ES6 standard
+- [ ] rewriting scripts following the NodeJS-supported ES6 standard  
+> Except `import`/`export` since the concern about ES6 vs CommonJS
+> is the compatability for browsers; however, the Hanayome is an desktop application and does not depend on browsers. It uses Electron to build the app and already has a Chromium inside.
+
 - [ ] reconstructing the project using AngularJS
 - [ ] a version control system including auto-update
 - [ ] a proxy server to listen for the game packets

@@ -20,4 +20,14 @@
 - [x] app icon
 
 ## Downloads
-[Google drive](https://drive.google.com/open?id=0B3_3qzw-W0QVTENkbEpoWUdHekE)
+[from Google drive](https://drive.google.com/open?id=0B3_3qzw-W0QVTENkbEpoWUdHekE)
+
+## For developers
+#### Set up the environment
+1. Download the source code  
+`git clone https://github.com/momocow/HanaYome.git`
+2. Install dependencies  
+`npm install`
+
+#### Build
+Use `gulp build` to build executables for all platforms

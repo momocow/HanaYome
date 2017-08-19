@@ -20,7 +20,7 @@
 - [x] app icon
 
 ## Downloads
-[from Google drive](https://drive.google.com/open?id=0B3_3qzw-W0QVTENkbEpoWUdHekE)
+- [from Google drive](https://drive.google.com/open?id=0B3_3qzw-W0QVTENkbEpoWUdHekE)
 
 ## For developers
 #### Set up the environment

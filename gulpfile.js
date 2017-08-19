@@ -10,10 +10,6 @@ const ticker = require("./gulp-scripts/version-ticker")
 
 const INFO = require("./package")
 
-gulp.task('version', function(){
-  console.log(`*** Start building ${package_name} v${package_version} ***`)
-})
-
 /**
  * Versioning
  */

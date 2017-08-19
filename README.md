@@ -19,7 +19,7 @@
 - [x] able to capture a screenshot into the clipboard
 - [x] app icon
 
-## Downloads
+## Download executables
 - [from Google drive](https://drive.google.com/open?id=0B3_3qzw-W0QVTENkbEpoWUdHekE)
 
 ## For developers

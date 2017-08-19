@@ -1,105 +1,78 @@
 const gulp = require('gulp')
-const uglify = require('gulp-uglify')
-const babel = require('gulp-babel')
-const zip = require('gulp-zip')
+const taskList = require('gulp-task-listing');
+const minify = require("gulp-babel-minify");
 const fs = require('fs-extra')
-const rm = require('gulp-rimraf')
-const ignore = require('gulp-ignore')
-const pump = require('pump')
-const asar = require('asar')
 const htmlmin = require('gulp-html-minifier')
-const Q = require('q')
+const zip = require('gulp-zip')
 
-const package_json = require('./package.json')
-const package_name = package_json.name
-const package_version = package_json.version
-const app_files = ['app.ico', 'main.js', 'package.json', 'assets/', 'views/', 'lib/']
-const js_files = ['main.js', 'init.js', 'views/**/*.js', 'lib/**/*.js', 'assets/js/**/*.js']
+const pack = require("./gulp-scripts/packaging")
+const ticker = require("./gulp-scripts/version-ticker")
 
-gulp.task('version', ()=>{
+const INFO = require("./package")
+
+gulp.task('version', function(){
   console.log(`*** Start building ${package_name} v${package_version} ***`)
 })
 
-gulp.task('uglify-js', ['version'], ()=>{
-  return gulp.src(js_files, { base: './' })
-      .pipe(babel({presets: ['es2015']}))
-      .pipe(uglify().on("error", console.log))
-      .pipe(gulp.dest('build/uglified'))
+/**
+ * Versioning
+ */
+ gulp.task('major', function(){
+   console.log(ticker.major())
+ })
+
+ gulp.task('minor', function(){
+   console.log(ticker.minor())
+ })
+
+ gulp.task('patch', function(){
+   console.log(ticker.patch())
+ })
+
+ gulp.task('stage', function(){
+   console.log(ticker.stage())
+ })
+
+ /**
+  * Build
+  */
+gulp.task('build-init', ['clean'], function(){
+  fs.copySync("./src", "./build/src")
 })
 
-gulp.task('minify-html', ['uglify-js'], ()=>{
-  return gulp.src('index.html', { base: './' })
-      .pipe(htmlmin({collapseWhitespace: true}))
-      .pipe(gulp.dest('build/uglified'))
+gulp.task('minify-html', ['build-init'], function(){
+  return gulp.src('build/src/**/*.html')
+    .pipe(htmlmin({collapseWhitespace: true}))
+    .pipe(gulp.dest('build/src'))
 })
 
-gulp.task('pack', ['minify-html'], async ()=>{
-  console.log("Copying app files")
-  for(file in app_files){
-    console.log(`** File: ${app_files[file]}`)
-    fs.copySync(app_files[file], `build/src/${app_files[file]}`, {overwrite: true})
-  }
-  console.log("Merging with uglified files")
-  fs.copySync('build/uglified', 'build/src', {overwrite: true})
-
-  console.log("Building libraries")
-  const execSync = require('child_process').execSync;
-  const child = execSync('npm install --production', {cwd: "build/src"});
-
-  var deferred = Q.defer()
-  ASAR_file = 'build/bin/app.asar'
-  asar.createPackage('build/src', ASAR_file, ()=>{
-    console.log("Package created")
-    console.log("Distributing package")
-    fs.copySync(ASAR_file, "dist/win-x32/resources/app.asar", {overwrite: true})
-    console.log("win32-ia32: branch built")
-    fs.copySync(ASAR_file, "dist/win-x64/resources/app.asar", {overwrite: true})
-    console.log("win32-x64: branch built")
-    fs.copySync(ASAR_file, "dist/linux-x64/resources/app.asar", {overwrite: true})
-    console.log("linux-x64: branch built")
-    fs.copySync(ASAR_file, "dist/mac-x64/Electron.app/Contents/Resources/app.asar", {overwrite: true})
-    console.log("darwin-x64: branch built")
-
-    deferred.resolve()
-  })
-
-  return deferred.promise
+gulp.task('minify-js', ['build-init'], function(){
+  // option 'base' is provided to overwrite files
+  return gulp.src("build/src/**/*.js")
+    .pipe(minify())
+    .pipe(gulp.dest("build/src"))
 })
 
-gulp.task('build-clean', ['build'], ()=>{
-  return gulp.src(['build/*'], { read: false })
-    .pipe(rm())
+gulp.task('package', ['minify-html', 'minify-js'], function(){
+  return pack()
 })
 
-gulp.task('build', ['zip'])
-
-gulp.task('zip', ['zip-win-x64', 'zip-win-x86', 'zip-linux-x64', 'zip-mac-x64'])
-
-gulp.task('zip-win-x64', ['pack'], ()=>{
-  return gulp.src("dist/win-x64/**")
-    .pipe(zip(`${package_name}-v${package_version}-win-x64.zip`))
-    .pipe(gulp.dest("dist/zip"))
+gulp.task('build', ['package'], function(){
+  console.log(`${INFO.productName || INFO.name} v${INFO.version} is built`)
 })
 
-gulp.task('zip-win-x86', ['pack'], ()=>{
-  return gulp.src("dist/win-x32/**")
-    .pipe(zip(`${package_name}-v${package_version}-win-x32.zip`))
-    .pipe(gulp.dest("dist/zip"))
+// gulp.task('release', ['package'], function(){
+//
+// })
+
+gulp.task('clean', function(){
+  fs.removeSync("./build/")
 })
 
-gulp.task('zip-linux-x64', ['pack'], ()=>{
-  return gulp.src("dist/linux-x64/**")
-    .pipe(zip(`${package_name}-v${package_version}-linux-x64.zip`))
-    .pipe(gulp.dest("dist/zip"))
-})
-
-gulp.task('zip-mac-x64', ['pack'], ()=>{
-  return gulp.src("dist/mac-x64/**")
-    .pipe(zip(`${package_name}-v${package_version}-mac-x64.zip`))
-    .pipe(gulp.dest("dist/zip"))
-})
-
-gulp.task('default', ()=>{
-  console.log('Usage:')
-  console.log('gulp build - Building and packing to ./dist')
+/**
+ * Util
+ */
+gulp.task('help', taskList)
+gulp.task('default', function(){
+  console.log('Use "gulp help" for more information')
 })

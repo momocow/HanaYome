@@ -2,8 +2,8 @@
   "name": "hanayome",
   "productName": "hanayome",
   "version": "1.2.0-alpha",
-  "description": "A dedicated browser for the web game, Flower Knight.",
-  "main": "main.js",
+  "description": "A dedicated browser for the web game, Flower Knight Girl.",
+  "main": "src/main.js",
   "scripts": {
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,8 +13,9 @@
     "url": "git+https://github.com/momocow/HanaYome.git"
   },
   "keywords": [
-    "Flower",
-    "Knight",
+    "flower knight girl",
+    "dmm",
+    "olg",
     "browser"
   ],
   "author": "MomoCow",

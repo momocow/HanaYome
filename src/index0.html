@@ -6,9 +6,28 @@
   <link rel="stylesheet" href="assets/css/bootstrap.min.css">
   <link rel="stylesheet" href="assets/css/bootstrap.vertical-tabs.min.css">
   <link rel="stylesheet" href="assets/css/app.css">
+  <script>
+    require("./views/env")
+    require("./views/notify")("document", $$)
+    require("bootstrap")
+  </script>
 </head>
 <body>
-  <div ng-include='control-bar/view.html'></div>
+  <nav class="navbar navbar-static-top navbar-inverse">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav navbar-left">
+          <li class="ui"><a class="ui ui-refresh btn navbar-btn"></a></li>
+          <li class="ui"><a class="ui ui-volume btn navbar-btn toggleable"></a></li>
+          <li class="ui"><a class="ui ui-screenshot btn navbar-btn"></a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="ui"><a class="ui ui-settings btn navbar-btn"></a></li>
+          <li class="ui"><a class="ui ui-info btn navbar-btn" data-toggle="modal" data-target="#modal-info"></a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
   <div class="container-fluid">
     <flower-game>
@@ -61,5 +80,11 @@
       </div>
     </div>
   </info>
+
+  <script>
+    require("./views/ui")
+    require("./views/services")
+    require("./views/webview")
+  </script>
 </body>
 </html>

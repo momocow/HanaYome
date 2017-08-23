@@ -1,0 +1,10 @@
+const config = require("../util/config")
+
+config.default("hanayome.window.width", 1016)
+  .default("hanayome.window.height", 806)
+  .default("hanayome.window.isMaximized", false)
+  .default("hanayome.window.isAlwaysOnTop", false)
+  .default("hanayome.audio.isMuted", false)
+  .default("hanayome.proxy.proxyScheme", "http")
+  .default("hanayome.proxy.proxyPort", "23777")
+  .default("hanayome.resource.versions", "https://gist.githubusercontent.com/momocow/5c5536f7831c2f979e839a05a5ad4f1c/raw")

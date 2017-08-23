@@ -4,9 +4,12 @@ const minify = require("gulp-babel-minify");
 const fs = require('fs-extra')
 const htmlmin = require('gulp-html-minifier')
 const zip = require('gulp-zip')
+const _ = require("lodash")
 
+// gulp scripts
 const pack = require("./gulp-scripts/packaging")
 const ticker = require("./gulp-scripts/version-ticker")
+const {sync} = require("./gulp-scripts/pkg-sync")
 
 const INFO = require("./package")
 
@@ -49,7 +52,11 @@ gulp.task('minify-js', ['build-init'], function(){
     .pipe(gulp.dest("build/src"))
 })
 
-gulp.task('package', ['minify-html', 'minify-js'], function(){
+gulp.task('sync', function(){
+  sync()
+})
+
+gulp.task('package', ['minify-html', 'minify-js', 'sync'], function(){
   return pack()
 })
 

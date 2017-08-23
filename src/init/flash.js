@@ -17,6 +17,7 @@ switch (process.platform) {
     folderName = `linux-${process.arch}`
     break
 }
+
 var ROOT = path.join(APP_PATH, "..")
 const flashPaths = [
   path.join(ROOT, '..', 'PepperFlash', folderName, pluginName),

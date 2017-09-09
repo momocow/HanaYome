@@ -5,6 +5,7 @@ const fs = require('fs-extra')
 const htmlmin = require('gulp-html-minifier')
 const zip = require('gulp-zip')
 const _ = require("lodash")
+const ts = require('gulp-typescript');
 
 // gulp scripts
 const pack = require("./gulp-scripts/packaging")
@@ -12,64 +13,71 @@ const ticker = require("./gulp-scripts/version-ticker")
 const {sync} = require("./gulp-scripts/pkg-sync")
 
 const INFO = require("./package")
+const SRC_DIR = "./src"
+const BUILD_DIR = "./build"
 
 /**
  * Versioning
  */
- gulp.task('major', function(){
+ gulp.task('tick:major', function(){
    console.log(ticker.major())
  })
 
- gulp.task('minor', function(){
+ gulp.task('tick:minor', function(){
    console.log(ticker.minor())
  })
 
- gulp.task('patch', function(){
+ gulp.task('tick:patch', function(){
    console.log(ticker.patch())
  })
 
- gulp.task('stage', function(){
+ gulp.task('tick:stage', function(){
    console.log(ticker.stage())
  })
 
  /**
   * Build
   */
-gulp.task('build-init', ['clean'], function(){
-  fs.copySync("./src", "./build/src")
+gulp.task('build:build-init', function(){
+  gulp.src([`${SRC_DIR}/**/*`, `!${SRC_DIR}/**/*.ts`])
+    .pipe(gulp.dest(`${BUILD_DIR}/src`))
 })
 
-gulp.task('minify-html', ['build-init'], function(){
-  return gulp.src('build/src/**/*.html')
+gulp.task('build:compile', ['build:build-init'], function(){
+  return gulp.src(`${SRC_DIR}/**/*.ts`)
+    .pipe(ts({
+        "allowJs": true,
+        "target": "es5"
+    }))
+    .pipe(gulp.dest(`${BUILD_DIR}/src`))
+})
+
+gulp.task('build:minify-html', ['build:build-init'], function(){
+  return gulp.src(`${BUILD_DIR}/src/**/*.html`)
     .pipe(htmlmin({collapseWhitespace: true}))
-    .pipe(gulp.dest('build/src'))
+    .pipe(gulp.dest(`${BUILD_DIR}/src`))
 })
 
-gulp.task('minify-js', ['build-init'], function(){
+gulp.task('build:minify-js', ['build:compile'], function(){
   // option 'base' is provided to overwrite files
-  return gulp.src("build/src/**/*.js")
+  return gulp.src(`${BUILD_DIR}/src/**/*.js`)
     .pipe(minify())
-    .pipe(gulp.dest("build/src"))
+    .pipe(gulp.dest(`${BUILD_DIR}/src`))
 })
 
-gulp.task('sync', function(){
+gulp.task('build:build', ['build:minify-html', 'build:minify-js'], function(){
   sync()
-})
-
-gulp.task('package', ['minify-html', 'minify-js', 'sync'], function(){
-  return pack()
-})
-
-gulp.task('build', ['package'], function(){
-  console.log(`${INFO.productName || INFO.name} v${INFO.version} is built`)
+  pack(`${BUILD_DIR}/src`, `./dist`).then(function(){
+    console.log(`${INFO.productName || INFO.name} v${INFO.version} is built`)
+  })
 })
 
 // gulp.task('release', ['package'], function(){
 //
 // })
 
-gulp.task('clean', function(){
-  fs.removeSync("./build/")
+gulp.task('build:clean', function(){
+  fs.emptyDirSync("./build")
 })
 
 /**

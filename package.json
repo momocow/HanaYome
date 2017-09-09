@@ -25,6 +25,8 @@
   },
   "homepage": "https://github.com/momocow/HanaYome#readme",
   "dependencies": {
+    "@types/lodash": "^4.14.74",
+    "@types/log4js": "0.0.33",
     "bootstrap": "^3.3.7",
     "bootstrap-vertical-tabs": "^1.2.2",
     "cson": "^4.1.0",
@@ -45,9 +47,11 @@
     "gulp-babel-minify": "^0.2.0",
     "gulp-html-minifier": "^0.1.8",
     "gulp-task-listing": "^1.0.1",
+    "gulp-typescript": "^3.2.2",
     "gulp-uglify": "^2.1.2",
     "gulp-zip": "^4.0.0",
     "isnumeric": "^0.3.2",
-    "range": "0.0.3"
+    "range": "0.0.3",
+    "typescript": "^2.4.2"
   }
 }

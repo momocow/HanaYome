@@ -12,7 +12,8 @@ const options = {
   tmpdir: "./build"
 }
 
-function pack(cb){
+function pack(src, dst, cb){
+  Object.assign(options, { dir: src, out: dst })
   packager(options, function(err, app_paths){
     if(err){
       console.error("Fails to package the executables.")

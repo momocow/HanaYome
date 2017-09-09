@@ -84,6 +84,9 @@ function tick(type){
   else if(type == 4 && stage == "beta"){
     stage = "release"
   }
+  else if(type == 4 && !stage){
+    stage = "alpha"
+  }
 
   let final = versToken.join(".")
   if(stage){

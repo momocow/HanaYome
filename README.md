@@ -6,7 +6,7 @@
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/momocow/HanaYome/master/LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/momocow/HanaYome.svg)](https://github.com/momocow/HanaYome/issues)
 [![GitHub stars](https://img.shields.io/github/stars/momocow/HanaYome.svg)](https://github.com/momocow/HanaYome/stargazers)
-[![Game link](https://img.shields.io/badge/game-FKG-ff69b4.svg)](pc-play.games.dmm.co.jp/play/flower)
+[![Game link](https://img.shields.io/badge/game-FKG-ff69b4.svg)](http://pc-play.games.dmm.co.jp/play/flower)
 
 ## TODO
 - [ ] rewriting scripts following the NodeJS-supported ES6 standard  

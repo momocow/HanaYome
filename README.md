@@ -1,4 +1,4 @@
-# ![icon](./assets/icon/app-icon.png =32x32) 花嫁ブラウザ (HanaYome Browser)
+# <img src='./assets/icon/app-icon.png' alt='icon' width='32' height='32' /> 花嫁ブラウザ (HanaYome Browser)
 ### _A WIP browser for DMM webgame, Flower Knight Girl_
 > Since it is made by a newbee in NodeJS, any advices via new issues are welcome \_(:з」∠)\_  
 

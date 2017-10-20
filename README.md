@@ -26,7 +26,7 @@
 - [x] app icon
 
 ## Download executables
-- [from Google drive](https://drive.google.com/open?id=0B3_3qzw-W0QVTENkbEpoWUdHekE)
+- [From Github](https://github.com/momocow/HanaYome/releases/latest)
 
 ## For developers
 #### Set up the environment

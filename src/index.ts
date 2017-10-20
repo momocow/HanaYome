@@ -11,8 +11,8 @@ import * as configuring from './service/configuring'
 import * as translating from './service/translating'
 import * as logging from './service/logging'
 
-let dtk: number = configuring.appConfig.get('mogame.logs.daysToKeep')
-let cpr: boolean = configuring.appConfig.get('mogame.logs.compress')
+let dtk: number = configuring.appConfig.get('hanayome.logs.daysToKeep')
+let cpr: boolean = configuring.appConfig.get('hanayome.logs.compress')
 logging.initLogging(dtk, cpr)
 translating.initTranslating()
 
@@ -44,8 +44,8 @@ function prompErrorMsgDialog(): boolean {
 
         switch (electron.dialog.showMessageBox(errorBoxOption)) {
             case 0:
-                let mogameInfo: Package = fs.readJSONSync('./package.json')
-                electron.shell.openExternal(mogameInfo.bugs.url)
+                let hanayomeInfo: Package = fs.readJSONSync('./package.json')
+                electron.shell.openExternal(hanayomeInfo.bugs.url)
                 break
             case 1:
                 electron.shell.showItemInFolder(logging.appLogPath)

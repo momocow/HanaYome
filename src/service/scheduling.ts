@@ -1,7 +1,7 @@
 import * as schedule from '../util/Schedule'
 import { appConfig } from './configuring'
 
-let loopDelay = appConfig.get('mogame.schedule.loopDelay')
+let loopDelay = appConfig.get('hanayome.schedule.loopDelay')
 
 export const scheduler = new schedule.Schedule(loopDelay)
 

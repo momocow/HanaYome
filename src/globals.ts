@@ -6,18 +6,18 @@ export const APP_DISPLAY_NAME: string = "HanaYome"
 export const APP_VERSION: string = electron.app.getVersion()
 
 /**
- * path of prebuilt electron binary or mogame binary
+ * path of prebuilt electron binary or hanayome binary
  */
 export const EXE_PATH: string = electron.app.getPath('exe')
 /**
  * When run as binary, this is the path of 'app' directory or 'app.asar' file.
- * When run as package, this is '<somewhere>/mogame/app',
+ * When run as package, this is '<somewhere>/hanayome/app',
  */
 export const APP_PATH: string = electron.app.getAppPath()
 export const VIEW_PATH: string = path.join(APP_PATH, 'view')
 // only one of RUN_AS_BIN and RUN_AS_PACKAGE should be true, and APP_NAME should not equal to 'electron'
 /**
- * (Binary mode) start by mogame binary
+ * (Binary mode) start by hanayome binary
  */
 export const RUN_AS_BIN: boolean = path.basename(EXE_PATH, '.exe') === APP_NAME
 /**

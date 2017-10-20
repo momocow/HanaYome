@@ -49,7 +49,7 @@ function createUpdaterWindow() {
  * If the returned promise is resolved, no update is performed and the app should continue.
  */
 export function update(): bluebird<void> {
-  return (globals.RUN_AS_PACKAGE || !appConfig.get('mogame.update.check')) ?
+  return (globals.RUN_AS_PACKAGE || !appConfig.get('hanayome.update.check')) ?
     bluebird.resolve() : new bluebird.Promise(_simpleUpdate)
 }
 
@@ -79,11 +79,11 @@ function _simpleUpdate(resolve, reject) {
       normalizeAccessKeys: true,
       icon: electron.nativeImage.createFromPath(globals.ICON_ICO),
       checkboxLabel: translate("labelEnableUpdateCheck"),
-      checkboxChecked: appConfig.get('mogame.update.check')
+      checkboxChecked: appConfig.get('hanayome.update.check')
     }
 
     electron.dialog.showMessageBox(updateBoxOption, function(resp, checked) {
-      appConfig.set('mogame.update.check', checked)
+      appConfig.set('hanayome.update.check', checked)
       if (resp == 0) {
         let packageJson = require(path.join(globals.APP_PATH, 'package.json')),
           releaseURL = packageJson.repository.url.replace(/^git\+(http.*)\.git$/, '$1/releases/latest')

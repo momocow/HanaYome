@@ -1,0 +1,5 @@
+export const MILLISEC_A_WEEK = 604800000
+export const MILLISEC_A_DAY = 86400000
+export const MILLISEC_A_HOUR = 3600000
+export const MILLISEC_A_MINUTE = 60000
+export const MILLISEC_A_SECOND = 1000

@@ -1,0 +1,9 @@
+cversion: '1.0.0'
+hanayome:
+  logs:
+    compress: true
+    daysToKeep: 14
+  schedule:
+    loopDelay: 100
+  update:
+    check: true

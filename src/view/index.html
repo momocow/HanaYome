@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link type="text/css" href="../../assets/vendor/flat-ui/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link type="text/css" href="../../assets/vendor/flat-ui/css/flat-ui.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="./font.css">
+    <link type="text/css" rel="stylesheet" href="./index.css">
+    <script>
+      // main entry point
+      require('./bootstrap.js')
+    </script>
+    <script src="../../assets/vendor/flat-ui/js/flat-ui.min.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse" role="navigation">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
+          <span class="sr-only"></span>
+        </button>
+        <a class="navbar-brand" id="app-brand" href="javascript:void(0)">花よめ</a>
+      </div>
+      <div class="collapse navbar-collapse" id="navbar-collapse-01">
+        <ul class="nav navbar-nav">
+          <li>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <FKG>
+      <webview class="scrollbar" src='about:blank' preload='./service/fkg-ipc' disablewebsecurity plugins></webview>
+    </FKG>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "hanayome-core",
+  "version": "1.0.0",
+  "description": "The core pluin of hanayome browser",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "hanayome",
+    "fkg",
+    "flower-knight-girl",
+    "dmm"
+  ],
+  "author": "MomoCow",
+  "license": "MIT"
+}

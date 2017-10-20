@@ -1,0 +1,43 @@
+# /index.js
+IssueOnGithub: '至Github Issue回報問題'
+ShowAppLogInExplorer: '在檔案總管開啟記錄檔'
+ViewAppLog: '檢視記錄檔'
+Finish: '結束'
+ErrorBoxTitle: 'Oops!'
+ErrorBoxMessage: '似乎有什麼地方搞砸了，我們會盡力修復它。'
+ErrorBoxDetail: """
+建議你以Github Issue回報錯誤並提供你的記錄檔(app.log)，以利修正錯誤。
+造成不便，敬請見諒!
+"""
+
+# error box
+pageFailLoading: '網頁連線錯誤!'
+pageFailLoadingDetails: '錯誤代碼: ${errorCode}\n錯誤描述: ${errorDesc}\n網址: ${url}'
+
+# /index.html
+navbarToggle: '展開'
+enableCheatMode: '模式'
+cheatModeOn: '黑科技'
+cheatModeOff: '一般'
+
+# /updating.html
+currentVersion: '當前版本: '
+checkForUpdate: '正在檢查更新...'
+updateAvailable: '已有可用更新!'
+updateNotAvailable: '你已經是最新版本!'
+startUpdate: '下載&更新'
+cancelUpdate: '取消'
+updaterError: '發生錯誤! (錯誤訊息: ${message})'
+downloading: '下載中... 約剩餘${rest}秒 (共${total})'
+updateDownloaded: '下載完畢! 即將進行更新...'
+
+# /updating.ts #updating dialog
+titleUpdateError: '注意!'
+bodyUpdateError: '更新時發生不明錯誤，已停止更新。'
+titleUpdateCheck: ''
+bodyUpdateCheck: '正在檢查可用更新...'
+titleUpdateAvailable: '已有可用更新!'
+bodyUpdateAvailable: '目前版本: ${current}\n最新版本: ${latest}'
+labelEnableUpdateCheck: '每次啟動前自動檢查更新'
+btnGoToDownload: '開啟下載頁面'
+btnCancel: '不了，暫不更新'

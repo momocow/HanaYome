@@ -1,0 +1,16 @@
+{
+  "name": "sample",
+  "version": "1.0.0",
+  "description": "A sample plugin for M-OGame",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "sample",
+    "plugin",
+    "M-OGame"
+  ],
+  "author": "MomoCow",
+  "license": "MIT"
+}

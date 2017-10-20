@@ -59,4 +59,6 @@ typings/
 
 # build dir
 build/
+app/
 dist/
+pretty/

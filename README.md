@@ -9,12 +9,6 @@
 [![Game link](https://img.shields.io/badge/game-FKG-ff69b4.svg)](http://pc-play.games.dmm.co.jp/play/flower)
 
 ## TODO
-- [ ] rewriting scripts following the NodeJS-supported ES6 standard  
-> Except `import`/`export` since the concern about ES6 vs CommonJS
-> is the compatibility for browsers; however, the Hanayome is an desktop application and does not depend on browsers. It uses Electron to build the app and already has a Chromium inside.
-
-- [ ] reconstructing the project using AngularJS
-- [ ] a version control system including auto-update
 - [ ] a proxy server to listen for the game packets
 
 ## Current Progress

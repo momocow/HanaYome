@@ -105,6 +105,7 @@
       },
       "extraResources": [
           "assets/**/*",
+          "!assets/unused",
           "!assets/config"
       ],
       "electronDownload": {
@@ -118,8 +119,8 @@
           "artifactName": "${productName}-v${version}-setup.${ext}",
           "oneClick": false,
           "allowToChangeInstallationDirectory": true,
-          "installerIcon": "assets/icon/install.ico",
-          "uninstallerIcon": "assets/icon/uninstall.ico",
+          "installerIcon": "assets/icon/app-icon.ico",
+          "uninstallerIcon": "assets/icon/app-icon.ico",
           "installerSidebar": "assets/icon/sidebar.bmp",
           "uninstallerSidebar": "assets/icon/sidebar.bmp",
           "menuCategory": "HanaYome",

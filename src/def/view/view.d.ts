@@ -1,4 +1,4 @@
 declare interface Window {
-  jQuery(selector: string): any,
-  $(selector: string): any
+  jQuery(selector: string|object): any,
+  $(selector: string|object): any
 }

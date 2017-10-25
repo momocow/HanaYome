@@ -6,6 +6,7 @@ import * as navbar from './component/navbar'
 import * as fkg from './component/fkg-view'
 import * as jquery from './jquery'
 import * as ipc from './service/ipc'
+import * as shortcut from './service/shortcut'
 
 import * as channels from '../channels'
 
@@ -16,7 +17,7 @@ if (!window.jQuery) {
 
 electron.remote.getCurrentWebContents().on('dom-ready', ipc.init)
 electron.remote.getCurrentWebContents().on('dom-ready', initUIs)
-// electron.remote.getCurrentWebContents().on('dom-ready', measureViewSize)
+shortcut.init()
 
 /**
  * init components
@@ -26,10 +27,6 @@ function initUIs(): void {
   fkg.init()
 }
 
-// function measureViewSize(): void {
-//   let fkg = globals._$('FKG')
-//   electron.ipcRenderer.send(channels.FKGView.fetchSize, fkg.clientWidth, fkg.clientHeight)
-// }
 
 // TODO test error object
 // electron.remote.getCurrentWebContents().on('did-fail-load', function(...error) {

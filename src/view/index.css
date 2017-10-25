@@ -20,10 +20,61 @@ nav.navbar{
   width: 20px;
   height: 20px;
 }
+.navbar-inverse .navbar-nav > li > a.nav-btn{
+  width: 45px;
+  height: 52px;
+}
+.navbar-inverse .navbar-nav > li > a.nav-btn:focus, #app-brand:focus,
+.navbar-inverse .navbar-nav > li > a.nav-subbtn:focus{
+  color: white;
+}
+.navbar-inverse .navbar-nav > li > a.nav-btn:hover{
+  color: #2eecc7;
+}
+.navbar-inverse .navbar-nav > li > a.nav-subbtn:hover{
+  color: white;
+}
+.navbar-inverse .navbar-nav > li > a.nav-btn + a.nav-subbtn{
+  margin-left: -5px;
+  border: 1px solid #4d6174;
+  padding: 4px 0;
+  top: -2px;
+}
+.navbar-inverse .navbar-nav > li > a.nav-btn + a.nav-subbtn:hover{
+  background-color: #4d6174;
+}
+.nav>li>a.nav-subbtn, .nav>li>a.nav-btn{
+  display: inline-block;
+}
+.nav-subbtn i.fa-sort-desc{
+  position: relative;
+  top: -2px;
+}
 #app-brand:hover{
   color: #ffb395;
 }
 #app-brand{
   font-family: ShigotoMemogaki;
   font-size: xx-large;
+}
+.navbar-nav > li > a{
+  font-size: 20px;
+  padding: 15px 12px;
+}
+.nav-tools{
+  float: right;
+  margin-right: 1vw;
+}
+#dropdown-screenshot-mode{
+  background-color: #2d3b49;
+  border: 4px solid #34495e;
+  border-top: 0;
+  width: 168px;
+  padding: 16px;
+  position: absolute;
+  left: -115px;
+  top: 52px;
+  border-radius: 2px;
+  text-align: center;
+  color: white;
 }

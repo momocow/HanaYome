@@ -24,4 +24,9 @@ export namespace FKGView{
   export const requireResult = "FKGView.require.result"
   export const fetchSize = "FKGView.size.get"
   export const setSize = "FKGView.size.set"
+  export const screenshot = "FKGView.screenshot"
+}
+
+export namespace ConfigWindow{
+  export const open = "config.window.open"
 }

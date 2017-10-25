@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <link type="text/css" href="../node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link type="text/css" href="../../assets/vendor/flat-ui/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link type="text/css" href="../../assets/vendor/flat-ui/css/flat-ui.css" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="./font.css">
@@ -21,8 +22,35 @@
         <a class="navbar-brand" id="app-brand" href="javascript:void(0)">花よめ</a>
       </div>
       <div class="collapse navbar-collapse" id="navbar-collapse-01">
-        <ul class="nav navbar-nav">
+        <ul class="nav navbar-nav nav-tools">
           <li>
+            <a id="btn-refresh" class="nav-btn" href="javascript:void(0)">
+              <i class="fa fa-refresh"></i>
+            </a>
+          </li>
+          <li>
+            <a id="btn-volume" class="nav-btn" href="javascript:void(0)">
+              <i class="fa fa-volume-off"></i>
+              <i class="fa fa-volume-up"></i>
+            </a>
+          </li>
+          <li>
+            <a id="btn-screenshot" class="nav-btn" href="javascript:void(0)">
+              <i class="fa fa-camera"></i>
+            </a>
+            <a id="btn-screenshot-mode" class="nav-subbtn" href="javascript:void(0)">
+              <i class="fa fa-sort-desc"></i>
+            </a>
+            <div id="dropdown-screenshot-mode">
+              <label id="label-clipboard" class="radio" for="screenshot-mode-clipboard"><input type="radio" value="clipboard" id="screenshot-mode-clipboard" name="screenshot-mode" data-toggle="radio"></label>
+              <label id="label-disk" class="radio" for="screenshot-mode-disk"><input type="radio" value="disk" id="screenshot-mode-disk" name="screenshot-mode" data-toggle="radio" ></label>
+              <button id="showScreenshotPath" class="btn btn-embossed btn-primary btn-wide"></button>
+            </div>
+          </li>
+          <li>
+            <a id="btn-settings" class="nav-btn" href="javascript:void(0)">
+              <i class="fa fa-cog"></i>
+            </a>
           </li>
         </ul>
       </div>

@@ -81,5 +81,6 @@ import './util/flash'
 // register onto global object to share with renderer process
 global['i18n'] = translating.translate
 global['IS_DEBUG_MODE'] = globals.IS_DEBUG_MODE
+global['getConfig'] = configuring.getConfig
 
 let main = Main.App.instance()

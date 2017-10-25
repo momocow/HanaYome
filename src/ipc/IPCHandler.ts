@@ -5,6 +5,7 @@ import * as channels from '../channels'
 import * as events from '../event/all'
 import * as ebus from '../event/EventBus'
 import * as translating from '../service/translating'
+import * as ConfigWindow from '../windows/config-window/ConfigWindow'
 
 import { appLog, viewLog } from '../service/logging'
 import { App } from '../App'
@@ -57,6 +58,11 @@ export namespace main {
         appLog.info(`Adjust the main window to \{width=${finalWidth}, height=${finalHeight}\}`)
         mainWindow.setSize(finalWidth, finalHeight)
       })
+      .on(channels.ConfigWindow.open, (e) => {
+        appLog.info('Creating the config window')
+
+        ConfigWindow.create()
+      })
   }
 
 }
@@ -68,7 +74,7 @@ export namespace Renderer {
     constructor() {
       electron.ipcMain.on(channels.FKGView.requireResult, (e, id, result) => {
         if (id in this.cbMap) {
-          if(this.cbMap[id]) this.cbMap[id](result)
+          if (this.cbMap[id]) this.cbMap[id](result)
           delete this.cbMap[id]
         }
       })

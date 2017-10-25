@@ -2,12 +2,14 @@ import * as electron from 'electron'
 import * as fs from 'fs'
 import * as path from 'path'
 import * as url from 'url'
+import * as uuid from 'uuid'
 
 import * as globals from '../globals'
 import * as channels from '../../channels'
+import * as navbar from './navbar'
 
 export function init() {
-  globals.LOGGER.debug('bootstrap#loadGame()')
+  globals.LOGGER.debug('fkg-view#init()')
 
   let FKG_View = <Electron.WebviewTag>globals._$('FKG>webview')
 
@@ -30,8 +32,8 @@ export function init() {
     let scrollbarCss = fs.readFileSync(path.join(__dirname, 'scrollbar.css'), 'utf8')
     FKG_View.insertCSS(scrollbarCss)
 
-    // let scriptDomReady = fs.readFileSync(path.join(__dirname, '..', 'service', 'fkg-ipc.js'), 'utf8')
-    // FKG_View.executeJavaScript(scriptDomReady, false)
+    FKG_View.setAudioMuted(<boolean>globals.appConfig.get('hanayome.audio.isMuted'))
+    navbar.update()
   })
 
   globals.LOGGER.info('Try connecting with DMM')
@@ -41,6 +43,14 @@ export function init() {
     protocol: 'http:',
     slashes: true
   }))
+}
+
+export function refreshFlash(){
+  globals.LOGGER.debug('fkg-view#refreshFlash()')
+  let FKG_View = <Electron.WebviewTag>globals._$("FKG > webview")
+
+  FKG_View.send(channels.FKGView.require, uuid(),
+    path.join(__dirname, '..', 'guest', 'refreshFlash'))
 }
 
 // TODO test event object

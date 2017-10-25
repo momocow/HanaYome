@@ -1,5 +1,15 @@
-cversion: '1.0.0'
+###################################
+# DO NOT change this field manually
+###################################
+cversion: '1.1.0'##################
+###################################
+
 hanayome:
+  audio:
+    isMuted: false
+  screenshot:
+    mode: 'clipboard'
+    path: './screenshot'
   logs:
     compress: true
     daysToKeep: 14

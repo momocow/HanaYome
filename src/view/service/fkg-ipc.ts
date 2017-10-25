@@ -1,4 +1,9 @@
 import { ipcRenderer } from 'electron'
-ipcRenderer.on('OGameView.require', function(e, rid, requirement) {
-  ipcRenderer.send('OGameView.require.result', rid, require(requirement))
+import * as channels from '../../channels'
+
+import * as globals from '../globals'
+
+ipcRenderer.on(channels.FKGView.require, function(e, rid, requirement) {
+  globals.LOGGER.info(`Requirement id=${rid} is requiring ${requirement}`)
+  ipcRenderer.send(channels.FKGView.requireResult, rid, require(requirement))
 })

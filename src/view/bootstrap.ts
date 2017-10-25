@@ -4,15 +4,17 @@ import * as electron from 'electron'
 
 import * as navbar from './component/navbar'
 import * as fkg from './component/fkg-view'
-import * as globals from './globals'
+import * as jquery from './jquery'
+import * as ipc from './service/ipc'
 
 import * as channels from '../channels'
 
 if (!window.jQuery) {
   // load JQuery
-  window.jQuery = globals.$
+  window.jQuery = window.$ = jquery.$
 }
 
+electron.remote.getCurrentWebContents().on('dom-ready', ipc.init)
 electron.remote.getCurrentWebContents().on('dom-ready', initUIs)
 // electron.remote.getCurrentWebContents().on('dom-ready', measureViewSize)
 

@@ -29,6 +29,9 @@ export function init() {
 
     let scrollbarCss = fs.readFileSync(path.join(__dirname, 'scrollbar.css'), 'utf8')
     FKG_View.insertCSS(scrollbarCss)
+
+    // let scriptDomReady = fs.readFileSync(path.join(__dirname, '..', 'service', 'fkg-ipc.js'), 'utf8')
+    // FKG_View.executeJavaScript(scriptDomReady, false)
   })
 
   globals.LOGGER.info('Try connecting with DMM')

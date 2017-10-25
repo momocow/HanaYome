@@ -29,11 +29,15 @@
 - [From Github](https://github.com/momocow/HanaYome/releases/latest)
 
 ## For developers
-#### Set up the environment
-1. Download the source code  
+#### Download the source code
+1. From github  
 `git clone https://github.com/momocow/HanaYome.git`
-2. Install dependencies  
-`npm install`
 
 #### Build
-Use `gulp build` to build executables for all platforms
+1. Build the JS application from Typescript source
+`gulp build:app`  
+> It will create a directory `app/` under your project root.
+
+2. Build releases based on your platform
+`gulp build:release`  
+> It will create a directory `dist/` under your peoject root.

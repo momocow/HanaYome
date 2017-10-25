@@ -3,7 +3,7 @@
 import * as electron from 'electron'
 import * as _ from 'lodash'
 
-import { $, I18N } from '../globals'
+import { I18N } from '../globals'
 
 
 
@@ -19,12 +19,12 @@ export function translate(uid: string){
 
 const UITranslater = {
   "#version":function(){
-    $('#version').before(I18N('currentVersion'))
+    window.$('#version').before(I18N('currentVersion'))
   },
   "#startUpdate":function(){
-    $('#startUpdate').text(I18N('startUpdate'))
+    window.$('#startUpdate').text(I18N('startUpdate'))
   },
   "#cancelUpdate":function(){
-    $('#cancelUpdate').text(I18N('cancelUpdate'))
+    window.$('#cancelUpdate').text(I18N('cancelUpdate'))
   }
 }

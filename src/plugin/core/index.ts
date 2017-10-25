@@ -1,6 +1,7 @@
 import * as electron from 'electron'
 import * as fs from 'fs'
 import * as path from 'path'
+import * as uuid from 'uuid'
 
 import * as kit from '../toolkit'
 
@@ -8,19 +9,13 @@ import { PluginBase } from '../PluginBase'
 
 const { PageDomReadyEvent } = kit.events
 
-
-const scriptSetFKGSize = `
-require("electron").ipcRenderer.on('${kit.channels.FKGView.setSize}', function(e, w, h){
-  jQuery('FKG').width(w).height(h)
-})`
-
-
 class Core extends PluginBase {
   private fkgWidth: number
   private fkgHeight: number
 
   public onDomReady() {
-    this.app.getMainWindow().webContents.executeJavaScript(scriptSetFKGSize)
+    this.app.getMainWindow().webContents.send(kit.channels.RendererRequire.request,
+      uuid(), viewPath('fkg-resizing'))
   }
 
   public onResize(width, height) {
@@ -56,13 +51,13 @@ class Core extends PluginBase {
         let view = this.app.getFKGView()
         if (view) {
           let alignCSSs = [
-            fs.readFileSync(path.join(__dirname, 'dmm.css'), 'utf8'),
-            fs.readFileSync(path.join(__dirname, 'dmm-frame.css'), 'utf8')
+            fs.readFileSync(viewPath('dmm.css'), 'utf8'),
+            fs.readFileSync(viewPath('dmm-frame.css'), 'utf8')
           ]
+          view.send(kit.channels.FKGView.require, uuid(), viewPath('preventDmmAlert'))
+          view.send(kit.channels.FKGView.require, uuid(), viewPath('resetScrollOffset'))
           view.insertCSS(alignCSSs[0])
           view.insertCSS(alignCSSs[1])
-          view.executeJavaScript("DMM.netgame.reloadDialog=()=>{}")
-          this.appLog.info('Has prevented the DMM reload warning')
 
           let winSize = this.app.getMainWindow().getContentSize()
           this.onResize(winSize[0], winSize[1])
@@ -70,6 +65,10 @@ class Core extends PluginBase {
       }
     })
   }
+}
+
+function viewPath(...paths){
+  return path.join(__dirname, 'view', ...paths)
 }
 
 export default new Core()

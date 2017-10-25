@@ -26,12 +26,12 @@ export class ViewLogger {
     this.level = (ViewLogger.levelMap[newLevel]) ? ViewLogger.levelMap[newLevel] : this.level
   }
   public log(level: LogLevel, msg: string, ...args: any[]) {
-    setImmediate(() => {
+    setTimeout(() => {
       if (ViewLogger.levelMap[level] && ViewLogger.levelMap[level] >= this.level) {
         console.log(msg, ...args)
       }
       ipcRenderer.send(channels.RendererLog.logging, level, msg, ...args)
-    })
+    }, 0)
   }
 
   public static readonly levelMap: { [level: string]: number } = {

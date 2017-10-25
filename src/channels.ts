@@ -13,6 +13,11 @@ export namespace RendererCall{
   export const callFitScrollDim = "call.fit-scroll-dim"
 }
 
+export namespace RendererRequire{
+  export const request = "renderer.require"
+  export const result = "renderer.require.result"
+}
+
 export namespace FKGView{
   export const fetchID = "FKGView.id"
   export const require = "FKGView.require"

@@ -20,6 +20,7 @@ class Core extends PluginBase {
 
   public onResize(width, height) {
     let view = this.app.getFKGView()
+    if(!kit.dmm.isFKGPage(this.app.getFKGView().getURL())) return
 
     this.fkgWidth = 0.94 * width
     this.fkgHeight = 0.87 * height

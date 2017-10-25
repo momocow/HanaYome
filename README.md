@@ -1,5 +1,5 @@
 # <img src='./assets/icon/app-icon.png' alt='icon' width='32' height='32' /> 花嫁ブラウザ (HanaYome Browser)
-### _A WIP browser for DMM webgame, Flower Knight Girl_
+### _A WIP browser for DMM webgame, Flower Knight Girl (フラワーナイトガール)_
 > Since it is made by a newbee in NodeJS, any advices via new issues are welcome \_(:з」∠)\_  
 
 [![Build Status](https://travis-ci.org/momocow/HanaYome.svg?branch=master)](https://travis-ci.org/momocow/HanaYome)

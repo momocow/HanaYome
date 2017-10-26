@@ -2,7 +2,7 @@ import * as electron from 'electron'
 import * as path from 'path'
 
 export const APP_NAME: string = electron.app.getName()
-export const APP_DISPLAY_NAME: string = "HanaYome"
+export const APP_DISPLAY_NAME: string = "花よめ"
 export const APP_VERSION: string = electron.app.getVersion()
 
 /**

@@ -43,3 +43,16 @@ btnCancel: '不了，暫不更新'
 
 # /config window
 settingsTitle: '設置'
+tabScreenshot: '截圖'
+tabLog: '紀錄'
+tabUpdate: '更新'
+tabAbout: '關於'
+screenshotDirLabel: '截圖資料夾: '
+selectScreenshotDir: '選擇資料夾'
+confirmScreenshotDir: '確認'
+screenshotFilenameLabel: '檔名格式: '
+
+
+# /screenshot.ts
+screenshotInClipboard: '截圖已放入剪貼簿!'
+screenshotSavedInDisk: '截圖已經儲存至以下路徑(點擊查看):\n${path}'

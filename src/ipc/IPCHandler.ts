@@ -1,22 +1,22 @@
 import * as electron from 'electron'
+import * as path from 'path'
 import * as uuidv4 from 'uuid/v4'
 
 import * as channels from '../channels'
 import * as events from '../event/all'
 import * as ebus from '../event/EventBus'
+import * as globals from '../globals'
 import * as translating from '../service/translating'
 import * as ConfigWindow from '../windows/config-window/ConfigWindow'
 
+import { appConfig } from '../service/configuring'
+import { windowHandler } from '../windows/WindowHandler'
 import { appLog, viewLog } from '../service/logging'
 import { App } from '../App'
 
 export namespace main {
   export function initChannels(app: App) {
-    electron.ipcMain.once(channels.RendererEvent.pageStopLoading, () => {
-      const mainWindow = app.getMainWindow()
-      mainWindow.show()
-      mainWindow.focus()
-    })
+    electron.ipcMain
       .once(channels.FKGView.fetchID, (e, vid) => {
         app.setFKGView(vid)
       })
@@ -63,6 +63,39 @@ export namespace main {
 
         ConfigWindow.create()
       })
+      .on(channels.DevTools.forFocusedWindow, (e) => {
+        let focused = electron.webContents.getFocusedWebContents()
+        if (focused && !focused.isDevToolsOpened) {
+          focused.openDevTools({
+            mode: "undocked"
+          })
+        }
+      })
+      .on(channels.MainCall.openDirDialog, (e) => {
+        electron.dialog.showOpenDialog(
+          windowHandler.get('config'),
+          {
+            title: translating.of("screenshotDirLabel"),
+            defaultPath: path.dirname(appConfig.get("hanayome.screenshot.path")),
+            buttonLabel: translating.of("confirmScreenshotDir"),
+            properties: [
+              'openDirectory',
+              'showHiddenFiles',
+              'promptToCreate'
+            ]
+          },
+          (selected) => {
+            if (selected.length > 0) {
+              e.sender.send(channels.MainCall.dirDialogResult, selected[0])
+            }
+          }
+        )
+      })
+    // .once(channels.RendererEvent.pageStopLoading, () => {
+    //   const mainWindow = app.getMainWindow()
+    //   mainWindow.show()
+    //   mainWindow.focus()
+    // })
   }
 
 }

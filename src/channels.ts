@@ -1,3 +1,8 @@
+export namespace MainCall{
+  export const openDirDialog = "dialog.dir.open"
+  export const dirDialogResult = "dialog.dir.result"
+}
+
 export namespace RendererEvent {
   export const pageStartLoading = "page.load.pre"
   export const pageStopLoading = "page.load.post"
@@ -25,6 +30,10 @@ export namespace FKGView{
   export const fetchSize = "FKGView.size.get"
   export const setSize = "FKGView.size.set"
   export const screenshot = "FKGView.screenshot"
+}
+
+export namespace DevTools{
+  export const forFocusedWindow = "focused.devtools.open"
 }
 
 export namespace ConfigWindow{

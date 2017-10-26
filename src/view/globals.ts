@@ -10,4 +10,5 @@ export const LOGGER: logging.ViewLogger = new logging.ViewLogger((IS_DEBUG_MODE)
 export const I18N = <(msg: string, ...formats: any[]) => string>electron.remote.getGlobal('i18n')
 export const getConfig = <(configName: string) => config.Config>electron.remote.getGlobal('getConfig')
 export const appConfig = getConfig('app')
+export const paths = electron.remote.getGlobal('paths')
 export { _$ }

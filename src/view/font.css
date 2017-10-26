@@ -2,3 +2,7 @@
     font-family: ShigotoMemogaki;
     src: url(../../assets/font/ShigotoMemogaki.ttf);
 }
+@font-face {
+    font-family: Seto;
+    src: url(../../assets/font/setofont.ttf);
+}

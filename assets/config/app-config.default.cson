@@ -10,6 +10,21 @@ hanayome:
   screenshot:
     mode: 'clipboard'
     path: './screenshot'
+    # Supported macro: ${year} ${yy} ${month} ${date} ${day} ${hour} ${min} ${sec} ${timestamp}
+    filename: '${timestamp}'
+    # When the filename has already existed, this field is appended to the filename before the file ext
+    # ${dup} is a number to avoid identical filenames, is auto-increment
+    duplicate: '-${dup}'
+    format: 'PNG'
+    png:
+      scale: 1
+    bmp:
+      scale: 1
+    url:
+      ext: 'txt'
+      scale: 1
+    jpg:
+      quality: 100
   logs:
     compress: true
     daysToKeep: 14

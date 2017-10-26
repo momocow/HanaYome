@@ -1,6 +1,8 @@
 import * as electron from 'electron'
+import * as path from 'path'
 import * as utils from 'util'
 
+import * as screenshot from './util/screenshot'
 import * as globals from '../globals'
 import * as channels from '../../channels'
 import { $ } from '../jquery'
@@ -23,11 +25,7 @@ export function init() {
       update()
     })
 
-    $("#btn-screenshot").on('click', function() {
-      FKG_View.capturePage({ x: 0, y: 0, width: 1200, height: 800 }, function(image) {
-        // electron.clipboard.writeImage(image, 'image/png')
-      })
-    })
+    $("#btn-screenshot").on('click', screenshot.screenshot(FKG_View))
 
     // init state
     $('#dropdown-screenshot-mode').hide()
@@ -65,7 +63,7 @@ export function init() {
 
     $('#showScreenshotPath').text(globals.I18N('showScreenshotPath'))
     $('#showScreenshotPath').on('click', function() {
-      electron.shell.showItemInFolder(globals.appConfig.get('hanayome.screenshot.path'))
+      electron.shell.showItemInFolder(path.join(screenshot.getScreenshotPath(), '#'))
     })
 
     $("#btn-settings").on('click', function() {

@@ -2,7 +2,60 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <link type="text/css" href="../../node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link type="text/css" href="../../../assets/vendor/flat-ui/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link type="text/css" href="../../../assets/vendor/flat-ui/css/flat-ui.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="../../view/font.css">
+    <link type="text/css" rel="stylesheet" href="./config.css">
+    <script>
+      window.jQuery = window.$ = require('../../view/jquery').$
+    </script>
+    <script src="../../../assets/vendor/flat-ui/js/flat-ui.min.js"></script>
   </head>
   <body>
+    <form id="configForm">
+      <ul class="nav nav-tabs nav-justified">
+        <li><a class="active" id="tab-screenshot" href="#pane-screenshot" data-toggle="tab">
+          <i class="fa fa-camera"></i>
+        </a></li>
+        <li><a id="tab-log" href="#pane-log" data-toggle="tab">
+          <i class="fa fa-book"></i>
+        </a></li>
+        <li><a id="tab-update" href="#pane-update" data-toggle="tab">
+          <i class="fa fa-cloud-download"></i>
+        </a></li>
+        <li><a id="tab-about" href="#pane-about" data-toggle="tab">
+          <i class="fa fa-id-card-o"></i>
+        </a></li>
+      </ul>
+      <div class="tab-content">
+        <div id="pane-screenshot" class="tab-pane fade">
+          <div class="form-group">
+            <label id="label-screenshotDir" for="screenshotDir">
+              <input type="text" id="screenshotDir" name="screenshotDir" class="form-control flat" />
+              <button id="selectScreenshotDir" class="btn btn-embossed btn-inverse"></button>
+            </label>
+          </div>
+          <div class="form-group">
+            <label id="label-screenshotFilename" for="screenshotFilename">
+              <input type="text" class="form-control" id="screenshotFilename" name="screenshotFilename" />
+            </label>
+          </div>
+        </div>
+        <div id="pane-log" class="tab-pane fade">
+          <label id="label-log-compressed" class="radio" for="log-compressed">
+            <input type="radio" data-toggle="radio" id="radio-compressed" name="logCompressed" value="true">
+            <input type="radio" data-toggle="radio" id="radio-not-compressed" name="logCompressed" value="false">
+          </label>
+        </div>
+        <div id="pane-update" class="tab-pane fade">
+        </div>
+        <div id="pane-about" class="tab-pane fade">
+        </div>
+      </div>
+    </form>
+    <script>
+      require('./init')
+    </script>
   </body>
 </html>

@@ -15,6 +15,7 @@ import { appConfig } from './service/configuring'
 import { appLog, viewLog } from './service/logging'
 import { scheduler } from './service/scheduling'
 import { update } from './service/updating'
+import { windowHandler } from './windows/WindowHandler'
 
 // commonjs
 import winStateManager = require('electron-window-state')
@@ -36,6 +37,13 @@ export class App {
     appLog.info(`Creating layout directory at ${globals.LAYOUT_PATH}`)
     fs.ensureDirSync(globals.LAYOUT_PATH)
 
+    let screenshotPath = path.resolve(
+      globals.USERDATA_PATH,
+      appConfig.get('hanayome.screenshot.path')
+    )
+    appLog.info(`Creating screenshot directory at ${screenshotPath}`)
+    fs.ensureDirSync(screenshotPath)
+
     this.pluginMap = pLoader.load()
 
     appLog.info('Start update check')
@@ -44,13 +52,12 @@ export class App {
           appLog.info('Will not have an update. The app continues.')
 
           this.start()
-        },
-        (reason)=>{
+        })
+        .catch((reason) => {
           appLog.warn(reason)
           appLog.warn('Promise from #update() is rejected. Stop the app...')
           this.stop()
-        }
-      )
+        })
     })
   }
 
@@ -126,6 +133,7 @@ export class App {
 
   private onClosed() {
     this.winState.saveState(this.mainWindow)
+    windowHandler.unregister('app')
     this.mainWindow = null
   }
 
@@ -140,7 +148,6 @@ export class App {
       width: this.winState.width,
       height: this.winState.height,
       resizable: true,
-      show: false,
       icon: globals.ICON_PATH,
       title: `${globals.APP_DISPLAY_NAME} v${globals.APP_VERSION}`,
       webPreferences: {
@@ -149,12 +156,10 @@ export class App {
       }
     })
 
+    windowHandler.register('app', this.mainWindow)
+
     // remove the default menu
     this.mainWindow.setMenu(null)
-
-    this.mainWindow.once('ready-to-show', () => {
-      appLog.debug('mainWindow#Event:ready-to-show')
-    })
 
     appLog.info(`[isMaximized]=${this.winState.isMaximized}`)
     if (this.winState.isMaximized) {
@@ -172,16 +177,16 @@ export class App {
       this.mainWindow.webContents.openDevTools({ mode: "undocked" })
     }
 
-    this.mainWindow.on('resize', ()=>{
+    this.mainWindow.on('resize', () => {
       let winSize = this.mainWindow.getContentSize()
-      for(let plugin of _.values(this.pluginMap)){
+      for (let plugin of _.values(this.pluginMap)) {
         plugin.onResize(winSize[0], winSize[1])
       }
     })
 
-    this.mainWindow.webContents.on('dom-ready', ()=>{
-      setImmediate(()=>{
-        for(let plugin of _.values(this.pluginMap)){
+    this.mainWindow.webContents.on('dom-ready', () => {
+      setImmediate(() => {
+        for (let plugin of _.values(this.pluginMap)) {
           plugin.onDomReady()
         }
       })

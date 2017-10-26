@@ -70,7 +70,7 @@
         "@types/traverse": "^0.6.29",
         "@types/uuid": "^3.4.2",
         "chai": "^4.1.2",
-        "electron": "1.7.9",
+        "electron": "^1.7.9",
         "electron-builder": "^19.27.7",
         "electron-compilers": "^5.9.0",
         "electron-packager": "^9.0.1",

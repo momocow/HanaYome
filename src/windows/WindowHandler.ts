@@ -17,11 +17,17 @@ class WindowHandler {
     return this.winMap[name]
   }
 
-  public getFocusedWindow() {
+  public getFocusedWindow () {
     for (let win of _.values(this.winMap)) {
       if (win.isFocused) {
         return win
       }
+    }
+  }
+
+  public closeAllWindows () {
+    for (let win of _.values(this.winMap)) {
+      win.close()
     }
   }
 }

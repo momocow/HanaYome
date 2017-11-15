@@ -47,12 +47,25 @@ tabScreenshot: '截圖'
 tabLog: '紀錄'
 tabUpdate: '更新'
 tabAbout: '關於'
-screenshotDirLabel: '截圖資料夾: '
+screenshotDirLabel: '截圖資料夾'
 selectScreenshotDir: '選擇資料夾'
 confirmScreenshotDir: '確認'
-screenshotFilenameLabel: '檔名格式: '
+screenshotFilenameLabel: '檔名格式'
+screenshotDuplicateLabel: '重複檔名後綴'
+compressLog: '壓縮'
+notCompressLog: '不壓縮'
+autoCheckUpdate: '啟動前自動檢查更新'
+checkUpdateNow: '檢查更新'
+bodyAbout: """\
+一款專門為遊戲「花騎士」而生的瀏覽器。詳情請見\
+"""
 
+titleNoUpdateAvailable: '你已經為最新版本!'
+bodyNoUpdateAvailable: '當前版本為 ${current}'
 
 # /screenshot.ts
 screenshotInClipboard: '截圖已放入剪貼簿!'
-screenshotSavedInDisk: '截圖已經儲存至以下路徑(點擊查看):\n${path}'
+screenshotSavedInDisk: """\
+截圖已經儲存至以下路徑(點擊查看):
+${path}\
+"""

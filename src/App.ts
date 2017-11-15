@@ -37,13 +37,6 @@ export class App {
     appLog.info(`Creating layout directory at ${globals.LAYOUT_PATH}`)
     fs.ensureDirSync(globals.LAYOUT_PATH)
 
-    let screenshotPath = path.resolve(
-      globals.USERDATA_PATH,
-      appConfig.get('hanayome.screenshot.path')
-    )
-    appLog.info(`Creating screenshot directory at ${screenshotPath}`)
-    fs.ensureDirSync(screenshotPath)
-
     this.pluginMap = pLoader.load()
 
     appLog.info('Start update check')
@@ -61,7 +54,7 @@ export class App {
     })
   }
 
-  private start() {
+  public start() {
     appLog.debug('App#start()')
     appLog.info('Starting the app')
 
@@ -93,7 +86,7 @@ export class App {
     return this.FKGView
   }
 
-  private stop() {
+  public stop() {
     appLog.debug('App#stop()')
     this.isActive = false
     electron.app.quit()
@@ -134,6 +127,7 @@ export class App {
   private onClosed() {
     this.winState.saveState(this.mainWindow)
     windowHandler.unregister('app')
+    windowHandler.closeAllWindows()
     this.mainWindow = null
   }
 

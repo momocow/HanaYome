@@ -12,6 +12,7 @@ import * as ConfigWindow from '../windows/config-window/ConfigWindow'
 import { appConfig } from '../service/configuring'
 import { windowHandler } from '../windows/WindowHandler'
 import { appLog, viewLog } from '../service/logging'
+import { update } from '../service/updating'
 import { App } from '../App'
 
 export namespace main {
@@ -76,7 +77,7 @@ export namespace main {
           windowHandler.get('config'),
           {
             title: translating.of("screenshotDirLabel"),
-            defaultPath: path.dirname(appConfig.get("hanayome.screenshot.path")),
+            defaultPath: path.resolve(globals.USERDATA_PATH, appConfig.get("hanayome.screenshot.path")),
             buttonLabel: translating.of("confirmScreenshotDir"),
             properties: [
               'openDirectory',
@@ -85,11 +86,34 @@ export namespace main {
             ]
           },
           (selected) => {
-            if (selected.length > 0) {
+            if (selected && selected.length > 0) {
               e.sender.send(channels.MainCall.dirDialogResult, selected[0])
             }
           }
         )
+      })
+      .on(channels.ConfigWindow.checkUpdate, (e) => {
+        update().then(() => { //wont have an update
+          const updateResultBoxOption: Electron.MessageBoxOptions = {
+            type: 'info',
+            title: translating.of("titleNoUpdateAvailable"),
+            message: translating.of("titleNoUpdateAvailable"),
+            detail: translating.of("bodyNoUpdateAvailable", { current: globals.APP_VERSION }),
+            icon: electron.nativeImage.createFromPath(globals.ICON_ICO),
+          }
+
+          electron.dialog.showMessageBox(windowHandler.get('config'), updateResultBoxOption, () => {})
+        })
+          .catch((reason) => {
+            appLog.warn(reason)
+            appLog.warn('Promise from #update() is rejected. Stop the app...')
+            app.stop()
+          })
+      })
+      .on(channels.ConfigWindow.newConfig, (e, configObj) => {
+        appConfig.set('hanayome.screenshot.path', configObj.screenshotPath)
+        appConfig.set('hanayome.logs.compress', configObj.shouldLogCompressed)
+        appConfig.set('hanayome.update.check', configObj.shouldAutoCheckUpdate)
       })
     // .once(channels.RendererEvent.pageStopLoading, () => {
     //   const mainWindow = app.getMainWindow()

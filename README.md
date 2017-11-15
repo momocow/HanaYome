@@ -4,6 +4,7 @@
 
 [![Build Status](https://travis-ci.org/momocow/HanaYome.svg?branch=master)](https://travis-ci.org/momocow/HanaYome)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/momocow/HanaYome/master/LICENSE)
+[![Github All Releases](https://img.shields.io/github/downloads/momocow/hanayome/total.svg)](https://github.com/momocow/HanaYome/releases/latest)
 [![GitHub issues](https://img.shields.io/github/issues/momocow/HanaYome.svg)](https://github.com/momocow/HanaYome/issues)
 [![GitHub stars](https://img.shields.io/github/stars/momocow/HanaYome.svg)](https://github.com/momocow/HanaYome/stargazers)
 [![Game link](https://img.shields.io/badge/game-FKG-ff69b4.svg)](http://pc-play.games.dmm.co.jp/play/flower)

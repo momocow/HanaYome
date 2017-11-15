@@ -1,12 +1,19 @@
 import * as electron from 'electron'
 import * as fs from 'fs-extra'
-import * as notifier from 'node-notifier'
+import * as notify from 'node-notifier'
 import * as path from 'path'
 
 import * as globals from '../../globals'
 
 export function screenshot(view: Electron.WebviewTag) {
   return function() {
+    let screenshotPath = path.resolve(
+      globals.paths.USERDATA_PATH,
+      globals.appConfig.get('hanayome.screenshot.path')
+    )
+    globals.LOGGER.info(`Ensure screenshot directory at ${screenshotPath}`)
+    fs.ensureDirSync(screenshotPath)
+
     view.capturePage({ x: 0, y: 0, width: 1200, height: 800 }, processImage)
   }
 }
@@ -61,19 +68,34 @@ export function processImage(image: Electron.nativeImage) {
     fs.outputFile(imageFile, imageBuffer)
       .then(function() {
         globals.LOGGER.info(`A screenshot image is saved to ${imageFile}`)
+
+        let notifier = notify
+/***************************************************************
+ * Workaround for Win10 after the Fall creator update
+ * @see https://github.com/mikaelbr/node-notifier/issues/208
+ */
+        if (process.platform === "win32") {
+          let WindowsBalloon: any = notify.WindowsBalloon
+          notifier = new WindowsBalloon({
+            withFallback: false,
+            customPath: ""
+          })
+        }
+/*************************************************************/
+
         notifier.notify({
           title: globals.paths.APP_DISPLAY_NAME,
-          message: globals.I18N('screenshotSavedInDisk', {path: imageFile}),
+          message: globals.I18N('screenshotSavedInDisk', { path: imageFile }),
           icon: globals.paths.ICON_PNG,
           wait: true
         })
-        notifier.on('click', function(){
+        notifier.on('click', function() {
           electron.shell.showItemInFolder(imageFile)
         })
       })
   }
   else {
-    try{
+    try {
       if (imageType == 'url') {
         electron.clipboard.writeText(<string>imageBuffer)
       }
@@ -82,13 +104,27 @@ export function processImage(image: Electron.nativeImage) {
         electron.clipboard.writeImage(image)
       }
       globals.LOGGER.info('A screenshot image is written into the clipboard')
+
+      let notifier = notify
+/***************************************************************
+* Workaround for Win10 after the Fall creator update
+* @see https://github.com/mikaelbr/node-notifier/issues/208
+*/
+      if (process.platform === "win32") {
+        let WindowsBalloon: any = notify.WindowsBalloon
+        notifier = new WindowsBalloon({
+          withFallback: false,
+          customPath: ""
+        })
+      }
+/*************************************************************/
       notifier.notify({
         title: globals.paths.APP_DISPLAY_NAME,
         message: globals.I18N('screenshotInClipboard'),
         icon: globals.paths.ICON_PNG
       })
     }
-    catch(err){
+    catch (err) {
       globals.LOGGER.error('clipboard error')
       globals.LOGGER.error(err)
     }

@@ -12,8 +12,8 @@ let _windowInstance: Electron.BrowserWindow
 export function create() {
   if (!_windowInstance) {
     _windowInstance = new electron.BrowserWindow({
-      width: 960,
-      height: 640,
+      width: 640,
+      height: 500,
       maximizable: false,
       fullscreenable: false,
       resizable: false,

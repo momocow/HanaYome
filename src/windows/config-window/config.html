@@ -14,43 +14,72 @@
   </head>
   <body>
     <form id="configForm">
-      <ul class="nav nav-tabs nav-justified">
-        <li><a class="active" id="tab-screenshot" href="#pane-screenshot" data-toggle="tab">
-          <i class="fa fa-camera"></i>
-        </a></li>
-        <li><a id="tab-log" href="#pane-log" data-toggle="tab">
-          <i class="fa fa-book"></i>
-        </a></li>
-        <li><a id="tab-update" href="#pane-update" data-toggle="tab">
-          <i class="fa fa-cloud-download"></i>
-        </a></li>
-        <li><a id="tab-about" href="#pane-about" data-toggle="tab">
-          <i class="fa fa-id-card-o"></i>
-        </a></li>
-      </ul>
-      <div class="tab-content">
-        <div id="pane-screenshot" class="tab-pane fade">
-          <div class="form-group">
-            <label id="label-screenshotDir" for="screenshotDir">
-              <input type="text" id="screenshotDir" name="screenshotDir" class="form-control flat" />
-              <button id="selectScreenshotDir" class="btn btn-embossed btn-inverse"></button>
-            </label>
+      <div class="panel-group" id="configMain">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a id="tab-screenshot" data-toggle="collapse" data-parent="#configMain" href="#pane-screenshot">
+                <i class="fa fa-camera"></i>
+              </a>
+            </h4>
           </div>
-          <div class="form-group">
-            <label id="label-screenshotFilename" for="screenshotFilename">
-              <input type="text" class="form-control" id="screenshotFilename" name="screenshotFilename" />
-            </label>
+          <div id="pane-screenshot" class="panel-collapse collapse in">
+            <div class="form-group">
+              <label id="label-screenshotDir" class="line" for="screenshotDir">
+                <input type="text" id="screenshotDir" name="screenshotDir" class="form-control flat" />
+                <button id="selectScreenshotDir" class="btn btn-embossed btn-inverse"></button>
+              </label>
+            </div>
           </div>
         </div>
-        <div id="pane-log" class="tab-pane fade">
-          <label id="label-log-compressed" class="radio" for="log-compressed">
-            <input type="radio" data-toggle="radio" id="radio-compressed" name="logCompressed" value="true">
-            <input type="radio" data-toggle="radio" id="radio-not-compressed" name="logCompressed" value="false">
-          </label>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a id="tab-log" data-toggle="collapse" data-parent="#configMain" href="#pane-log">
+                <i class="fa fa-book"></i>
+              </a>
+            </h4>
+          </div>
+          <div id="pane-log" class="panel-collapse collapse">
+            <div class="form-group">
+              <label id="label-log-compressed" class="radio" for="log-compressed">
+                <input type="radio" data-toggle="radio" id="radio-compressed" name="logCompressed" value="true">
+              </label>
+              <label id="label-log-not-compressed" class="radio" for="log-not-compressed">
+                <input type="radio" data-toggle="radio" id="radio-not-compressed" name="logCompressed" value="false">
+              </label>
+            </div>
+          </div>
         </div>
-        <div id="pane-update" class="tab-pane fade">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a id="tab-update" data-toggle="collapse" data-parent="#configMain" href="#pane-update">
+                <i class="fa fa-cloud-download"></i>
+              </a>
+            </h4>
+          </div>
+          <div id="pane-update" class="panel-collapse collapse">
+            <label id='labelAutoUpdateCheck' class='checkbox' for='autoCheckUpdate'>
+              <input type='checkbox' data-toggle='checkbox' id='autoCheckUpdate' name='autoCheckUpdate'>
+            </label>
+          </div>
         </div>
-        <div id="pane-about" class="tab-pane fade">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a id="tab-about" data-toggle="collapse" data-parent="#configMain" href="#pane-about">
+                <i class="fa fa-id-card-o"></i>
+              </a>
+            </h4>
+          </div>
+          <div id="pane-about" class="panel-collapse collapse">
+            <h3><span id='app-icon'></span>花よめ <span id='app-version'></span></h3>
+            <hr>
+            <p id='body-about'><a id='ghlink' href='javascript:void(0)'>https://github.com/momocow/HanaYome</a><p>
+            <hr>
+            <button id="immediatelyCheck" class="btn btn-embossed btn-inverse"></button>
+          </div>
         </div>
       </div>
     </form>

@@ -74,7 +74,7 @@ function _simpleUpdate(resolve, reject) {
       defaultId: 0,
       title: translate("titleUpdateAvailable"),
       message: translate("titleUpdateAvailable"),
-      detail: translate("bodyUpdateAvailable", { current: globals.APP_VERSION, latest: info.version }),
+      detail: translate("bodyUpdateAvailable", { version: globals.APP_VERSION, latest: info.version }),
       cancelId: 1,
       normalizeAccessKeys: true,
       icon: electron.nativeImage.createFromPath(globals.ICON_ICO),
@@ -98,7 +98,22 @@ function _simpleUpdate(resolve, reject) {
 
   autoUpdater.once('checking-for-update', function() {
     appLog.info('Checking for update')
-    notify.notify({
+
+    let notifier = notify
+    /***************************************************************
+    * Workaround for Win10 after the Fall creator update
+    * @see https://github.com/mikaelbr/node-notifier/issues/208
+    */
+    if (process.platform === "win32") {
+      let WindowsBalloon: any = notify.WindowsBalloon
+      notifier = new WindowsBalloon({
+        withFallback: false,
+        customPath: ""
+      })
+    }
+    /*************************************************************/
+
+    notifier.notify({
       title: `${globals.APP_DISPLAY_NAME} ${translate("titleUpdateCheck")}`,
       message: translate("bodyUpdateCheck"),
       icon: globals.ICON_PNG
@@ -108,7 +123,21 @@ function _simpleUpdate(resolve, reject) {
   autoUpdater.checkForUpdates().then(
     function(result) { },
     function(reason) {
-      notify.notify({
+      let notifier = notify
+  /***************************************************************
+  * Workaround for Win10 after the Fall creator update
+  * @see https://github.com/mikaelbr/node-notifier/issues/208
+  */
+      if (process.platform === "win32") {
+        let WindowsBalloon: any = notify.WindowsBalloon
+        notifier = new WindowsBalloon({
+          withFallback: false,
+          customPath: ""
+        })
+      }
+  /*************************************************************/
+
+      notifier.notify({
         title: `${globals.APP_DISPLAY_NAME} ${translate("titleUpdateError")}`,
         message: translate("bodyUpdateError")
       })

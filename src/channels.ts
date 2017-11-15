@@ -38,4 +38,7 @@ export namespace DevTools{
 
 export namespace ConfigWindow{
   export const open = "config.window.open"
+  export const checkUpdate = "config.window.update"
+  export const updateResult = "config.window.update.result"
+  export const newConfig = "config.window.apply"
 }

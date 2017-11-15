@@ -1,6 +1,38 @@
-.nav-tabs a{
+#configMain a{
   font-family: Seto;
 }
-.nav-tabs a i{
+#configMain a i{
   margin-right: 10px;
+}
+
+#screenshotDir {
+  display: inline-block;
+  width: 50%;
+}
+
+.line {
+  width: 90%;
+}
+
+.panel-collapse {
+  margin-left: 40px;
+}
+
+#pane-about h3 {
+  font-family: ShigotoMemogaki;
+}
+
+#app-icon {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+}
+
+#app-icon img {
+  width: 100%;
+  height: 100%;
+}
+
+#immediatelyCheck {
+  margin-bottom: 13px;
 }

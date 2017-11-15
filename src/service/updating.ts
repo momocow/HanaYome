@@ -74,7 +74,7 @@ function _simpleUpdate(resolve, reject) {
       defaultId: 0,
       title: translate("titleUpdateAvailable"),
       message: translate("titleUpdateAvailable"),
-      detail: translate("bodyUpdateAvailable", { version: globals.APP_VERSION, latest: info.version }),
+      detail: translate("bodyUpdateAvailable", { current: globals.APP_VERSION, latest: info.version }),
       cancelId: 1,
       normalizeAccessKeys: true,
       icon: electron.nativeImage.createFromPath(globals.ICON_ICO),

@@ -1,3 +1,4 @@
+# /index.js
 IssueOnGithub: ''
 ShowAppLogInExplorer: ''
 ViewAppLog: ''
@@ -5,3 +6,58 @@ Finish: ''
 ErrorBoxTitle: ''
 ErrorBoxMessage: ''
 ErrorBoxDetail: ''
+
+# error box
+pageFailLoading: ''
+pageFailLoadingDetails: ''
+
+# /index.html navbar
+screenshotToClipboard: ''
+screenshotToDisk: ''
+showScreenshotPath: ''
+
+# /updating.html
+currentVersion: ''
+checkForUpdate: ''
+updateAvailable: ''
+updateNotAvailable: ''
+startUpdate: ''
+cancelUpdate: ''
+updaterError: ''
+downloading: ''
+updateDownloaded: ''
+
+# /updating.ts #updating dialog
+titleUpdateError: ''
+bodyUpdateError: ''
+titleUpdateCheck: ''
+bodyUpdateCheck: ''
+titleUpdateAvailable: ''
+bodyUpdateAvailable: ''
+labelEnableUpdateCheck: ''
+btnGoToDownload: ''
+btnCancel: ''
+
+# /config window
+settingsTitle: ''
+tabScreenshot: ''
+tabLog: ''
+tabUpdate: ''
+tabAbout: ''
+screenshotDirLabel: ''
+selectScreenshotDir: ''
+confirmScreenshotDir: ''
+screenshotFilenameLabel: ''
+screenshotDuplicateLabel: ''
+compressLog: ''
+notCompressLog: ''
+autoCheckUpdate: ''
+checkUpdateNow: ''
+bodyAbout: ''
+
+titleNoUpdateAvailable: ''
+bodyNoUpdateAvailable: ''
+
+# /screenshot.ts
+screenshotInClipboard: ''
+screenshotSavedInDisk:

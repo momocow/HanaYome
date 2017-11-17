@@ -7,6 +7,7 @@ cversion: '1.1.0'##################
 hanayome:
   audio:
     isMuted: false
+  lang: ''
   screenshot:
     mode: 'clipboard'
     path: './screenshot'

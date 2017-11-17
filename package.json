@@ -2,7 +2,7 @@
     "name": "hanayome",
     "productName": "hanayome",
     "appId": "me.momocow.hanayome",
-    "version": "2.1.1",
+    "version": "2.1.2",
     "description": "A dedicated browser for the web game, Flower Knight Girl.",
     "main": "./index.js",
     "engines": {
